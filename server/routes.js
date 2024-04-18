@@ -38,6 +38,30 @@ router.post('/register', async (req, res) => {
         res.status(500).json({ error: "An error occurred" })
     }
 })
+
+router.put('/update-user', async (req, res) => {
+    if (!req.checkValidation()) {
+        return res.status(401).json({ error: "Unauthorized Login" });
+    }
+    const userId = req.user.id;
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(userId, {
+            fname: req.body.fname,
+            lname: req.body.lname,
+            mail: req.body.mail
+        }, { new: true }); 
+
+        if (!updatedUser) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        res.status(200).json({ updatedUser });
+    } catch (err) {
+        res.status(500).json({ error: "An error occurred" });
+    }
+});
+
 connectDB()
 
 module.exports = router
