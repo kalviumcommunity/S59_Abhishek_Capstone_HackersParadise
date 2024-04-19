@@ -12,3 +12,21 @@ Dive into curated courses on all ethical hacking on your schedule spanning all t
 **Bug Bounties:** In this, hackers can sign up for bug bounty programs on leading platforms and find and report bugs and earn rewards, from vulnerabilities to bugs, we will help you learn them all.
 
 **Hackers’ activities:** In this section, users who have done a bug bounty or made any new tool and want to tell about those bounties, then they can tell about the bounties they have found, what tools they used, what was the bug in that website/app that they found out and also whether that bug was crucial or not.
+
+# TechStack: 
+**Frontend:** 
+React
+ * Tailwind CSS
+ * Material UI
+
+**Backend:**
+* Express.j
+
+* Node.js
+  
+**DataBase:**
+* MongoDB
+
+
+**Backend Deployemnt:**  
+https://s59-abhishek-capstone-hackersparadise.onrender.com/
