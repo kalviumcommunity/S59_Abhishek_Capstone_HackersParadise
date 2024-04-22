@@ -40,7 +40,7 @@ router.post('/register', async (req, res) => {
 })
 
 router.put('/update-user', async (req, res) => {
-    if (!req.checkValidation()) {
+    if (!checkValidation()) {
         return res.status(401).json({ error: "Unauthorized Login" });
     }
     const userId = req.user.id;
