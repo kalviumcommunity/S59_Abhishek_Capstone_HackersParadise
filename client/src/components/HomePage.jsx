@@ -4,6 +4,7 @@ import bug from "../../public/bug.png";
 import learning from "../../public/learning.png";
 import SliderHome from "./SliderHome";
 import icon from "../../public/icon-g.png";
+import arrow from "../../public/arrow.png";
 export default function HomePage() {
   return (
     <>
@@ -36,7 +37,7 @@ export default function HomePage() {
           rerum!
         </p>
         <div className="flex justify-center text-center">
-          <button className=" bg-gradient-to-b from-[#d48ff9] via-[#b25ffb] to-[#6300ff] hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mr-2">
+          <button className="bg-gradient-to-b from-[#d48ff9] via-[#b25ffb] to-[#6300ff] hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mr-2">
             LOGIN
           </button>
           <div className="p-0.5 bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] to-[#6300ff] rounded ">
@@ -70,7 +71,7 @@ export default function HomePage() {
           Discover Opportunities
         </h1>
         <div className="flex justify-center">
-        <div className="h-fit w-[80%] mt-[2vh] flex justify-center mb-10 text-white">
+        <div className="h-fit w-[80%] mt-[2vh] flex justify-center mb-2 text-white">
           <div className=" h-full w-[20vw] bg-[#b25ffb] m-4 rounded">
             <div className="flex place-items-center justify-between h-[10vh] w-full shadow-2xl p-4 font-bold">
               <div className="flex place-items-center">
@@ -178,6 +179,13 @@ export default function HomePage() {
           </div>
         </div>
         </div>
+        <div className="flex justify-center ml-[57vw]">
+          <div className="w-[7vw] flex justify-center place-items-center rounded font-bold bg-gradient-to-r from-[#b25ffb] to-[#6300ff] cursor-pointer">
+          <p className="text-white font-fold">See more</p>
+          <img src={arrow} alt="image" className=""></img>
+          </div>
+          </div>
+        
         <footer className="h-fit text-white text-center bg-[#242424]">
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
