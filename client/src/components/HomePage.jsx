@@ -70,9 +70,9 @@ export default function HomePage() {
           Discover Opportunities
         </h1>
         <div className="flex justify-center">
-        <div className="w-[80%] mt-[2vh] flex justify-center mb-10 text-white">
-          <div className=" h-full w-[20vw] bg-[#b25ffb] m-6 rounded">
-            <div className="flex place-items-center justify-between place-h-[10vh] w-full shadow-2xl p-4 font-bold">
+        <div className="h-fit w-[80%] mt-[2vh] flex justify-center mb-10 text-white">
+          <div className=" h-full w-[20vw] bg-[#b25ffb] m-4 rounded">
+            <div className="flex place-items-center justify-between h-[10vh] w-full shadow-2xl p-4 font-bold">
               <div className="flex place-items-center">
               <img src={icon} alt="" className="h-[6vh]"></img>
               <p className="ml-2">Grammarly</p>
