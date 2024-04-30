@@ -10,21 +10,7 @@ export default function HomePage() {
   return (
     <>
       <div className="bg-[#000746] h-full">
-        <div className="flex justify-center pt-2 mb-4 h-[8vh] sticky top-0 bg-[#000746] w-full">
-          <button className="border-b-4 border-[#000746] hover:border-purple-500  text-white font-semibold py-2 px-4 mr-2">
-            HOME
-          </button>
-          <button className="border-b-4 border-[#000746] hover:border-purple-500 text-white font-semibold py-2 px-4 mr-2">
-            LEARN
-          </button>
-          <button className="border-b-4 border-[#000746] hover:border-purple-500 text-white font-semibold py-2 px-4 mr-2">
-            BUG BOUNTIES
-          </button>
-          <button className="border-b-4 border-[#000746] hover:border-purple-500 text-white font-semibold py-2 px-4 mr-2">
-            HACTIVITY
-          </button>
-        </div>
-        <h1 className="text-5 text-center text-transparent bg-clip-text bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] to-[#6300ff] text-[5vw] font-bold mt-[2vh] mb-6">
+        <h1 className="text-5 text-center text-transparent bg-clip-text bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] via-[#b25ffb] to-[#6300ff] text-[5vw] font-bold mb-6">
           HACKER'S PARADISE
         </h1>
         <p className="text-white text-[0.8vw] m-6 mt-2 text-center">
