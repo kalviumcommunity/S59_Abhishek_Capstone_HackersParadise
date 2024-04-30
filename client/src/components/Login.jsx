@@ -23,7 +23,7 @@ export default function Login() {
             <div className="flex justify-center">
               <img src={password} alt="password image"></img>
             <input
-              type="text"
+              type="password"
               placeholder="Enter Password"
               className="m-4 text-[1vw] h-[6vh] p-2 rounded-[0.8rem] w-[20vw]"
             /></div>
