@@ -1,29 +1,30 @@
 import React from "react";
-import activity from "../../public/activity.png";
-import bug from "../../public/bug.png";
-import learning from "../../public/learning.png";
+import activity from "/activity.png";
+import bug from "/bug.png";
+import learning from "/learning.png";
 import SliderHome from "./SliderHome";
-import icon from "../../public/icon-g.png";
-import arrow from "../../public/arrow.png";
+import icon from "/icon-g.png";
+import arrow from "/arrow.png";
+import { Link } from "react-router-dom"
 export default function HomePage() {
   return (
     <>
       <div className="bg-[#000746] h-full">
         <div className="flex justify-center pt-2 mb-4 h-[8vh] sticky top-0 bg-[#000746] w-full">
-          <button className="border-b-2 border-[#000746] hover:border-purple-500  text-white font-semibold py-2 px-4 mr-2">
+          <button className="border-b-4 border-[#000746] hover:border-purple-500  text-white font-semibold py-2 px-4 mr-2">
             HOME
           </button>
-          <button className="border-b-2 border-[#000746] hover:border-purple-500 text-white font-semibold py-2 px-4 mr-2">
+          <button className="border-b-4 border-[#000746] hover:border-purple-500 text-white font-semibold py-2 px-4 mr-2">
             LEARN
           </button>
-          <button className="border-b-2 border-[#000746] hover:border-purple-500 text-white font-semibold py-2 px-4 mr-2">
+          <button className="border-b-4 border-[#000746] hover:border-purple-500 text-white font-semibold py-2 px-4 mr-2">
             BUG BOUNTIES
           </button>
-          <button className="border-b-2 border-[#000746] hover:border-purple-500 text-white font-semibold py-2 px-4 mr-2">
+          <button className="border-b-4 border-[#000746] hover:border-purple-500 text-white font-semibold py-2 px-4 mr-2">
             HACTIVITY
           </button>
         </div>
-        <h1 className="text-5 xl text-center text-transparent bg-clip-text bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] to-[#6300ff] text-[5vw] font-bold mt-[2vh] mb-6">
+        <h1 className="text-5 text-center text-transparent bg-clip-text bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] to-[#6300ff] text-[5vw] font-bold mt-[2vh] mb-6">
           HACKER'S PARADISE
         </h1>
         <p className="text-white text-[0.8vw] m-6 mt-2 text-center">
@@ -37,14 +38,18 @@ export default function HomePage() {
           rerum!
         </p>
         <div className="flex justify-center text-center">
+          <Link to="/Login">
           <button className="bg-gradient-to-b from-[#d48ff9] via-[#b25ffb] to-[#6300ff] hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mr-2">
             LOGIN
           </button>
+          </Link>
+          <Link>
           <div className="p-0.5 bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] to-[#6300ff] rounded ">
             <button className="text-white bg-[#000746] font-bold py-2 px-4 rounded">
               GET STARTED
             </button>
           </div>
+          </Link>
         </div>
         <SliderHome />
         <div className="flex justify-center w-full h-[30vh] text-white mt-6">

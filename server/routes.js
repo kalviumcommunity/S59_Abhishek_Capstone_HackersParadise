@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const { connectDB } = require('./db.js')
+const Joi = require('joi')
 const user = require('./Schemas/userSchema.js')
 
 const validateLogin = Joi.object({
