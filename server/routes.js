@@ -3,7 +3,7 @@ const router = express.Router();
 const { connectDB } = require('./db.js')
 const Joi = require('joi')
 const user = require('./Schemas/userSchema.js')
-const bounty = require('.Schemas/BountySchema.js')
+const bounty = require('./Schemas/BountySchema.js')
 
 const validateLogin = Joi.object({
     fname: Joi.string().required(),
