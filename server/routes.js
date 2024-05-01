@@ -4,6 +4,7 @@ const Joi = require('joi');
 const { connectDB } = require('./db.js')
 const Joi = require('joi')
 const user = require('./Schemas/userSchema.js')
+const bounty = require('./Schemas/BountySchema.js')
 
 const validateLogin = Joi.object({
     fname: Joi.string().required(),
@@ -37,6 +38,7 @@ router.post('/register', async (req, res) => {
         res.status(201).json({ savedUser })
     }
     catch (err) {
+        console.log(err)
         res.status(500).json({ error: "An error occurred" })
     }
 })
@@ -64,6 +66,15 @@ router.put('/update-user', async (req, res) => {
     }
 });
 
+router.get('/bounties', async (req, res) => {
+    try {
+        const bounties = await bounty.find()
+        res.json(bounties)
+    }
+    catch (err) {
+        res.status(500).json(err)
+    }
+});
 connectDB()
 
 module.exports = router
