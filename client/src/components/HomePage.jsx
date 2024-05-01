@@ -10,7 +10,7 @@ export default function HomePage() {
   return (
     <>
       <div className="bg-[#000746] h-full">
-        <h1 className="text-5 text-center text-transparent bg-clip-text bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] via-[#b25ffb] to-[#6300ff] text-[5vw] font-bold mb-6">
+        <h1 className="text-[10vh] text-center text-transparent bg-clip-text bg-gradient-to-r from-[#d48ff9] via-[#9b41f8] to-[#6300ff] text-[5vw] font-bold mb-6">
           HACKER'S PARADISE
         </h1>
         <p className="text-white text-[0.8vw] m-6 mt-2 text-center">
@@ -25,13 +25,13 @@ export default function HomePage() {
         </p>
         <div className="flex justify-center text-center">
           <Link to="/Login">
-          <button className="bg-gradient-to-b from-[#d48ff9] via-[#b25ffb] to-[#6300ff] hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mr-2">
+          <button className="h-[5.5vh] bg-gradient-to-b from-[#d48ff9] via-[#b25ffb] to-[#6300ff] hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mr-2">
             LOGIN
           </button>
           </Link>
           <Link>
-          <div className="p-0.5 bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] to-[#6300ff] rounded ">
-            <button className="text-white bg-[#000746] font-bold py-2 px-4 rounded">
+          <div className="p-0.5 h-[5.4vh] bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] to-[#6300ff] rounded">
+            <button className="text-white bg-[#000746] font-bold p-2 rounded">
               GET STARTED
             </button>
           </div>
@@ -171,10 +171,12 @@ export default function HomePage() {
         </div>
         </div>
         <div className="flex justify-center ml-[57vw]">
+          <Link to="/Bounties">
           <div className="w-[7vw] flex justify-center place-items-center rounded font-bold bg-gradient-to-r from-[#b25ffb] to-[#6300ff] cursor-pointer">
           <p className="text-white font-fold">See more</p>
           <img src={arrow} alt="image" className=""></img>
           </div>
+          </Link>
           </div>
         
         <footer className="h-fit text-white text-center bg-[#242424]">
