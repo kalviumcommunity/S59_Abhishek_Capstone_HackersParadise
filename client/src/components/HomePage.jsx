@@ -6,6 +6,7 @@ import SliderHome from "./SliderHome";
 import icon from "/icon-g.png";
 import arrow from "/arrow.png";
 import { Link } from "react-router-dom"
+
 export default function HomePage() {
   return (
     <>
