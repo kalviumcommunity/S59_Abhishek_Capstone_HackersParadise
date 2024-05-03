@@ -1,45 +1,16 @@
-import React from "react";
-import activity from "/activity.png";
-import bug from "/bug.png";
-import learning from "/learning.png";
-import SliderHome from "./SliderHome";
-import icon from "/icon-g.png";
-import arrow from "/arrow.png";
-import { Link } from "react-router-dom"
-
-export default function HomePage() {
+import React from 'react'
+import search from '/search.svg'
+export default function Modules() {
   return (
     <>
-      <div className="bg-[#000746] h-full">
-        <h1 className="text-[10vh] text-center text-transparent bg-clip-text bg-gradient-to-r from-[#d48ff9] via-[#9b41f8] to-[#6300ff] text-[5vw] font-bold mb-6">
-          HACKER'S PARADISE
-        </h1>
-        <p className="text-white text-[0.8vw] m-6 mt-2 text-center">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia,
-          iure molestiae at dolorum amet dolor perspiciatis distinctio sit
-          ullam. Veritatis, molestiae deserunt! Reprehenderit a, non assumenda
-          impedit aperiam rerum placeat. Perspiciatis obcaecati repellendus
-          corrupti similiq a, rcorporis vero sunt re similique rem enim illo,
-          ratione at voluptatibus eaque accusantium velit aspernatur facere!
-          Excepturi optio aliquid repudiandae harum, ipsum illo porro quas
-          rerum!
-        </p>
-        <div className="flex justify-center text-center">
-          <Link to="/Login">
-          <button className="h-[5.5vh] bg-gradient-to-b from-[#d48ff9] via-[#b25ffb] to-[#6300ff] hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mr-2">
-            LOGIN
-          </button>
-          </Link>
-          <Link>
-          <div className="p-0.5 h-[5.4vh] bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] to-[#6300ff] rounded">
-            <button className="text-white bg-[#000746] font-bold p-2 rounded">
-              GET STARTED
-            </button>
-          </div>
-          </Link>
-        </div>
-        <SliderHome />
-        <div className="flex justify-center w-full h-[30vh] text-white mt-6">
+    <div className="bg-[#000746] h-full">
+    <div className='border-2 bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] to-[#6300ff] rounded'>
+      <input placeholder="Search Modules here..." className='text-purple-500 bg-[#000746]'></input> 
+      <img src={search} alt=""></img> 
+    </div>
+    </div>
+
+    <div className="flex justify-center w-full h-[30vh] text-white mt-6">
           <div className="flex flex-col place-items-center justify-center h-full w-[15vw] p-10 m-4 border-2 border-[#b25ffb]">
             <img src={learning} alt="" className="w-[8vw] h-[18vh] m-6"></img>
             <Link to="/Modules">
@@ -192,7 +163,6 @@ export default function HomePage() {
             Temporibuslitaque, cupiditate atque dolore nulla!ing elit.
             Temporibuslitaque, cupiditate atque dolore nulla!</p>
         </footer>
-      </div>
     </>
-  );
+  )
 }

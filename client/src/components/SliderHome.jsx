@@ -78,7 +78,7 @@ function SliderHome() {
         <div className="flex justify-center">
           <div className="flex justify-center mt-[8vh] mb-[10vh]">
             <img
-              src={}
+              src={Bugs}
               alt="image"
               className="h-[50vh] rounded-xl"
             ></img>
