@@ -98,7 +98,7 @@ function SliderHome() {
             ></img>
             <div className="h-[40vh] m-8">
               <h2 className="text-7xl text-[3vw] w-[500px] text-transparent bg-clip-text bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] to-[#6300ff] font-bold leading-snug">
-               Coming Future of Penetration Testing. 
+               Know about coming Future of Penetration Testing. 
               </h2>
             </div>
           </div>
