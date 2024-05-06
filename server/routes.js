@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router();
 const Joi = require('joi');
 const { connectDB } = require('./db.js')
-const Joi = require('joi')
 const user = require('./Schemas/userSchema.js')
 const bounty = require('./Schemas/BountySchema.js')
 
