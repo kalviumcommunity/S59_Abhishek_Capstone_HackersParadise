@@ -33,7 +33,7 @@ export default function Hactivity() {
                 ></input>
                 <img
                   src={search}
-                  alt="search"
+                  alt="search Icon"
                   className="cursor-pointer w-[2vw]"
                 ></img>
               </div>
@@ -63,8 +63,8 @@ export default function Hactivity() {
             </p>
           </div>
           <div className="bg-[#8e35ff] p-4 rounded-xl">
-            <img src={like} alt="likes" className="w-[3rem] p-2 cursor-pointer"></img>
-            <img src={comment} alt="comment" className="w-[3rem] p-2 cursor-pointer"></img>
+            <img src={like} alt="likes Icon" className="w-[3rem] p-2 cursor-pointer"></img>
+            <img src={comment} alt="comment Icon" className="w-[3rem] p-2 cursor-pointer"></img>
           </div>
         </div>
       </div>
