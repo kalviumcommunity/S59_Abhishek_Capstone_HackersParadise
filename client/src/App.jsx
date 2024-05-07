@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import Bounties from "./components/Bounties";
 import Modules from "./components/Modules"; 
+import Hactivity from "./components/Hactivity";
 function App() {
   return (
     <>
@@ -14,6 +15,7 @@ function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/Bounties" element={<Bounties />} />
         <Route path="/Modules" element={<Modules />} />
+        <Route path="/Hactivity" element={<Hactivity />} />
       </Routes>
     </>
   );
