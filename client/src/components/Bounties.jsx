@@ -21,7 +21,7 @@ export default function Bounties() {
 
   return (
     <>
-    <div className="bg-[#000746] h-full pt-2">
+    <div className="bg-[#000746] h-full ">
     <div className='pt-[4vh] pb-[4vh] '>
     <div className='m-auto p-[0.2rem] bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] to-[#6300ff] rounded-[0.9rem] w-[40vw]'>
       <div className='flex justify-between bg-[#000746] p-[0.2rem] pr-[1rem] pl-[1rem] rounded-xl'>
