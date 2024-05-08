@@ -21,5 +21,6 @@ const HactivitySchema = new mongoose.Schema({
     }
 })
 
-const Hactivity = mongoose.model('bounty', HactivitySchema)
+const Hactivity = mongoose.model('Hactivity', HactivitySchema)
+
 module.exports = Hactivity

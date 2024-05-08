@@ -82,8 +82,10 @@ router.post('/hactivity', async (req, res) => {
         res.status(201).json(savedHactivity);
     } catch (error) {
         res.status(400).json({ error: error.message });
+        console.log(error)
     }
 })
+
 connectDB()
 
 module.exports = router
