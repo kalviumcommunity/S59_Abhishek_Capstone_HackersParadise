@@ -74,6 +74,18 @@ router.get('/bounties', async (req, res) => {
         res.status(500).json(err)
     }
 });
+
+router.post('/hactivity', async (req, res) => {
+    try {
+        const newHactivity = new Hactivity(req.body);
+        const savedHactivity = await newHactivity.save();
+        res.status(201).json(savedHactivity);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+        console.log(error)
+    }
+})
+
 connectDB()
 
 module.exports = router
