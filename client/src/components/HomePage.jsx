@@ -30,7 +30,7 @@ export default function HomePage() {
               LOGIN
             </button>
           </Link>
-          <Link>
+          <Link to="/Modules">
             <div className="p-0.5 h-[5.4vh] bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] to-[#6300ff] rounded">
               <button className="text-white bg-[#000746] font-bold p-2 rounded">
                 GET STARTED
@@ -50,15 +50,19 @@ export default function HomePage() {
           </div>
           <div className="flex flex-col place-items-center justify-center h-full w-[15vw] m-4 border-2 border-[#b25ffb]">
             <img src={bug} alt="" className="w-[8vw] h-[18vh] m-6"></img>
-            <button className="bg-[#b25ffb] font-bold leading-snug text-[1vw] h-[5vh] mt-6 mb-8 p-[0.5vw] mb-8 py-2 px-4 rounded">
-              Bug Bounties
-            </button>
+            <Link to="/Bounties">
+              <button className="bg-[#b25ffb] font-bold leading-snug text-[1vw] h-[5vh] mt-6 mb-8 p-[0.5vw] mb-8 py-2 px-4 rounded">
+                Bug Bounties
+              </button>
+            </Link>
           </div>
           <div className=" flex flex-col place-items-center justify-center h-full w-[15vw] m-4 border-2 border-[#b25ffb]">
             <img src={activity} alt="" className="w-[8vw] h-[18vh] m-6"></img>
+            <Link to="/Hactivity">
             <button className=" bg-[#b25ffb] font-bold leading-snug text-[1vw] h-[5vh] mt-6 mb-8 p-[0.5vw] rounded">
               Hactivity
             </button>
+            </Link>
           </div>
         </div>
         <h1 className="text-transparent bg-clip-text bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] to-[#6300ff] font-bold text-[4vw] text-center m-10">

@@ -61,8 +61,13 @@ export default function Modules() {
               </li>
             </ol>
           </div>
-          <hr className="bg-[#5711af]" />
         </div>
+        <div className="flex items-end w-[7vw]">
+        <button className="w-full flex justify-center place-items-center rounded font-bold bg-gradient-to-r from-[#b25ffb] via-[#b25ffb] to-[#6300ff] text-white">
+          Start the Course
+        </button>
+        </div>
+        <hr className="bg-[#5711af] w-full" />
       </div>
     </>
   );
