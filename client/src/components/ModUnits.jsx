@@ -34,7 +34,7 @@ export default function ModUnits() {
                     and contacts, which can help you make informed career
                     decisions.
                   </p>
-                  <ol type="i" class="list-inside list-decimal mt-2">
+                  <ol type="i" className="list-inside list-decimal mt-2">
                     <li>Router</li>
                     <li>MAC Address</li>
                     <li>IP Address</li>
