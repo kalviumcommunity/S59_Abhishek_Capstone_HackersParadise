@@ -1,6 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react';
+import axios from 'axios';
 
 export default function SignUp() {
+  const [formData, setFormData] = useState({
+    fname: '',
+    lname: '',
+    mail: '',
+    password: '',
+});
+
+const [error, setError] = useState('');
+const [success, setSuccess] = useState('');
+
+const handleChange = (e) => {
+    setFormData({
+        ...formData,
+        [e.target.name]: e.target.value,
+    });
+};
+
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
+
+    try {
+        const response = await axios.post('/register', formData);
+        setSuccess('User registered successfully!');
+    } catch (err) {
+        setError(err.response.data.Error || 'An error occurred');
+    }
+};
   return (
     <div className="bg-[#000746] h-full">
     <div className="flex justify-center pt-[12vh] pb-[20vh]">
