@@ -1,6 +1,8 @@
 import React from "react";
 import search from "/search.svg";
 import module from "/module.png";
+import { Link } from "react-router-dom"
+
 export default function Modules() {
   // const [data, setData] = useState([]);
   // const fetchData = () => {
@@ -63,9 +65,11 @@ export default function Modules() {
           </div>
         </div>
         <div className="flex items-end w-[7vw]">
+          <Link to="/ModUnits">
         <button className="w-full flex justify-center place-items-center rounded font-bold bg-gradient-to-r from-[#b25ffb] via-[#b25ffb] to-[#6300ff] text-white">
           Start the Course
         </button>
+        </Link>
         </div>
         <hr className="bg-[#5711af] w-full" />
       </div>
