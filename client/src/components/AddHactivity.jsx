@@ -15,16 +15,17 @@ export default function AddHactivity() {
         <div className="max-w-md mx-auto p-4 bg-white rounded shadow-lg">
             <h2 className="text-2xl font-semibold mb-4">Add a New Hactivity</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Company</label>
+                <div className="mb-4">
+                    <label htmlFor="company" className="block text-sm font-medium text-gray-700">Company</label>
                     <input
-                        id="content"
-                        {...register('content', { required: true })}
+                        type="text"
+                        id="company"
+                        {...register('company', { required: true })}
                         className="w-full p-2 border rounded"
-                    ></input>
+                    />
                 </div>
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Title</label>
+                    <label htmlFor="title" className="block text-sm font-medium text-gray-700">Title</label>
                     <input
                         type="text"
                         id="title"
@@ -33,7 +34,7 @@ export default function AddHactivity() {
                     />
                 </div>
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Content</label>
+                    <label htmlFor="content" className="block text-sm font-medium text-gray-700">Content</label>
                     <textarea
                         id="content"
                         {...register('content', { required: true })}
@@ -41,22 +42,24 @@ export default function AddHactivity() {
                     ></textarea>
                 </div>
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Tags</label>
-                    <textarea
-                        id="content"
-                        {...register('content', { required: true })}
-                        className="w-full p-2 border rounded"
-                    ></textarea>
-                </div>
-                <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Bounty Reward</label>
+                    <label htmlFor="tags" className="block text-sm font-medium text-gray-700">Tags</label>
                     <input
-                        id="content"
-                        {...register('content', { required: true })}
+                        type="text"
+                        id="tags"
+                        {...register('tags', { required: true })}
                         className="w-full p-2 border rounded"
-                    ></input>
+                    />
                 </div>
-                <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+                <div className="mb-4">
+                    <label htmlFor="bountyReward" className="block text-sm font-medium text-gray-700">Bounty Reward</label>
+                    <input
+                        type="number"
+                        id="bountyReward"
+                        {...register('bountyReward', { required: true })}
+                        className="w-full p-2 border rounded"
+                    />
+                </div>
+                <button type="submit" className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-300">
                     Submit
                 </button>
             </form>
