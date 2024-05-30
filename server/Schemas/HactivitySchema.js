@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const HactivitySchema = new mongoose.Schema({
+    company: {
+        type: String,
+        required : true
+    },
     topic:{
         type : String,
         required : true

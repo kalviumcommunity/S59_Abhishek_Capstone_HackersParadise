@@ -2,6 +2,7 @@ import React from "react";
 import search from "/search.svg";
 import like from "/like.png";
 import comment from "/comment.png";
+import { Link } from 'react-router-dom'
 
 export default function Hactivity() {
     // const [data, setData] = useState([]);
@@ -39,7 +40,7 @@ export default function Hactivity() {
               </div>
             </div>
           </div>
-          <div className="flex justify-between place-items-center w-[22%]">
+          <div className="flex justify-between place-items-center w-[30%]">
             <div className="p-0.5 h-[5.4vh] w-[6vw] bg-gradient-to-r from-[#b25ffb] to-[#6300ff] rounded ml-[4rem]">
               <button className="text-white w-full bg-[#000746] font-bold p-2 rounded">
                 Filter
@@ -49,6 +50,13 @@ export default function Hactivity() {
               <button className="text-white w-full bg-[#000746] font-bold p-2 rounded">
                 Sort By
               </button>
+            </div>
+            <div className="p-0.5 h-[5.4vh]  w-[6vw] bg-gradient-to-r from-[#b25ffb] to-[#6300ff] rounded">
+              <Link to="/AddHactivity"> 
+              <button className="text-white w-full bg-[#000746] font-bold p-2 rounded">
+                Add
+              </button>
+              </Link>  
             </div>
           </div>
         </div>
