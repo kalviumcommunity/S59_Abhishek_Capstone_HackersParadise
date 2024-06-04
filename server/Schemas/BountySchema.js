@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const bountySchema = new mongoose.Schema({
+    imgURL : {
+        type: String,
+        required: true
+    },
     company : {
         type: String,
         required : true

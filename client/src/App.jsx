@@ -4,6 +4,10 @@ import HomePage from "./components/HomePage";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import Bounties from "./components/Bounties";
+import Modules from "./components/Modules"; 
+import Hactivity from "./components/Hactivity";
+import ModUnits from "./components/ModUnits"
+import AddHactivity from "./components/AddHactivity";
 function App() {
   return (
     <>
@@ -12,7 +16,10 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Bounties" element={<Bounties />} />
-
+        <Route path="/Modules" element={<Modules />} />
+        <Route path="/Hactivity" element={<Hactivity />} />
+        <Route path="/ModUnits" element={<ModUnits />} />
+        <Route path="/AddHactivity" element={<AddHactivity />} />
       </Routes>
     </>
   );
