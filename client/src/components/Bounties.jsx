@@ -1,7 +1,5 @@
-
-import React from "react";
-import { useState, useEffect } from 'react'
-import search from '/search.svg'
+import React, { useState, useEffect } from 'react';
+import search from '/search.svg';
 
 export default function Bounties() {
   const [data, setData] = useState([]);
@@ -24,10 +22,10 @@ export default function Bounties() {
       const response = await fetch(`http://localhost:8080/api/bounties/${id}`, {
         method: 'DELETE',
       });
-      if (response.status === 200) {
+      if (response.status === 204) {
         setData(data.filter((bounty) => bounty.id !== id));
       } else {
-        console.error("Error deleting data: Non-200 status code", response.status);
+        console.error(`Error deleting data: Received status ${response.status}`);
       }
     } catch (err) {
       console.error("Error deleting data:", err);
@@ -46,9 +44,12 @@ export default function Bounties() {
       const updatedBounty = await response.json();
       setData((prevData) => {
         const index = prevData.findIndex((b) => b.id === updatedBounty.id);
-        const newData = [...prevData];
-        newData[index] = updatedBounty;
-        return newData;
+        if (index !== -1) {
+          const newData = [...prevData];
+          newData[index] = updatedBounty;
+          return newData;
+        }
+        return prevData;
       });
       setEditMode(false);
       setEditBounty(null);
@@ -63,6 +64,13 @@ export default function Bounties() {
 
   return (
     <>
+      <div className="bg-[#000746] h-full">
+        <div className='pt-[4vh] pb-[4vh]'>
+          <div className='m-auto p-[0.2rem] bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] to-[#6300ff] rounded-[0.9rem] w-[40vw]'>
+            <div className='flex justify-between bg-[#000746] p-[0.2rem] pr-[1rem] pl-[1rem] rounded-xl'>
+              <input placeholder="Search Modules here..." className='text-[#d48ff9] placeholder-[#d48ff9] bg-[#000746] text-[1vw] w-full  focus:outline-none focus:ring-0 font-semibold'></input> 
+              <img src={search} alt="search" className='cursor-pointer w-[2vw]'></img> 
+            </div>
           </div>
         </div>
         {data.map((bounty) => (
