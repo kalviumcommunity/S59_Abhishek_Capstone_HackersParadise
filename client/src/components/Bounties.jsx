@@ -6,49 +6,53 @@ export default function Bounties() {
   const [editMode, setEditMode] = useState(false);
   const [editBounty, setEditBounty] = useState(null);
 
-  const fetchData = () => {
-    fetch("http://localhost:8080/api/bounties")
-      .then((response) => response.json())
-      .then((result) => {
-        console.log("Fetched data:", result);
-        setData(result);
-      })
-      .catch((err) => {
-        console.error("Error fetching data:", err);
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/bounties");
+      const result = await response.json();
+      console.log("Fetched data:", result);
+      setData(result);
+    } catch (err) {
+      console.error("Error fetching data:", err);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/bounties/${id}`, {
+        method: 'DELETE',
       });
-  };
-
-  const handleDelete = (id) => {
-    fetch(`http://localhost:8080/api/bounties/${id}`, {
-      method: 'DELETE',
-    })
-    .then((response) => {
-      if (response.ok) {
+      if (response.status === 200) {
         setData(data.filter((bounty) => bounty.id !== id));
+      } else {
+        console.error("Error deleting data: Non-200 status code", response.status);
       }
-    })
-    .catch((err) => {
+    } catch (err) {
       console.error("Error deleting data:", err);
-    });
+    }
   };
 
-  const handleUpdate = (bounty) => {
-    fetch(`http://localhost:8080/api/bounties/${bounty.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(bounty),
-    })
-    .then((response) => response.json())
-    .then((updatedBounty) => {
-      setData(data.map((b) => (b.id === updatedBounty.id ? updatedBounty : b)));
+  const handleUpdate = async (bounty) => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/bounties/${bounty.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bounty),
+      });
+      const updatedBounty = await response.json();
+      setData((prevData) => {
+        const index = prevData.findIndex((b) => b.id === updatedBounty.id);
+        const newData = [...prevData];
+        newData[index] = updatedBounty;
+        return newData;
+      });
       setEditMode(false);
       setEditBounty(null);
-    })
-    .catch((err) => {
+    } catch (err) {
       console.error("Error updating data:", err);
-    });
+    }
   };
 
   useEffect(() => {
