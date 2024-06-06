@@ -5,12 +5,16 @@ export default function Unit() {
   const [newItem, setNewItem] = useState("");
   const [editingIndex, setEditingIndex] = useState(null);
   const [editingItem, setEditingItem] = useState("");
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:8080/unit")
       .then(response => response.json())
       .then(data => setData(data))
-      .catch(error => console.error("Error fetching data:", error));
+      .catch(error => {
+        console.error("Error fetching data:", error);
+        setError("Failed to fetch data.");
+      });
   }, []);
 
   const addItem = () => {
@@ -22,8 +26,15 @@ export default function Unit() {
       body: JSON.stringify({ item: newItem }),
     })
       .then(response => response.json())
-      .then(updatedData => setData(updatedData))
-      .catch(error => console.error("Error adding item:", error));
+      .then(updatedData => {
+        setData(updatedData);
+        setNewItem("");
+        setError(null);
+      })
+      .catch(error => {
+        console.error("Error adding item:", error);
+        setError("Failed to add item.");
+      });
   };
 
   const deleteItem = (index) => {
@@ -31,13 +42,24 @@ export default function Unit() {
       method: "DELETE",
     })
       .then(response => response.json())
-      .then(updatedData => setData(updatedData))
-      .catch(error => console.error("Error deleting item:", error));
+      .then(updatedData => {
+        setData(updatedData);
+        setError(null);
+      })
+      .catch(error => {
+        console.error("Error deleting item:", error);
+        setError("Failed to delete item.");
+      });
   };
 
   const startEditing = (index) => {
-    setEditingIndex(index);
-    setEditingItem(data.items[index]);
+    if (data && data.items && data.items[index] !== undefined) {
+      setEditingIndex(index);
+      setEditingItem(data.items[index]);
+      setError(null);
+    } else {
+      setError("Invalid item index.");
+    }
   };
 
   const updateItem = () => {
@@ -53,14 +75,19 @@ export default function Unit() {
         setData(updatedData);
         setEditingIndex(null);
         setEditingItem("");
+        setError(null);
       })
-      .catch(error => console.error("Error updating item:", error));
+      .catch(error => {
+        console.error("Error updating item:", error);
+        setError("Failed to update item.");
+      });
   };
 
   return (
     <>
       <div className="bg-[#000746] h-full">
         <div className="text-white p-8 bg-[#1a1a1a] rounded-lg shadow-lg max-w-4xl">
+          {error && <p className="text-red-500">{error}</p>}
           {data ? (
             <>
               <ol className="list-inside list-decimal text-2xl leading-loose">
