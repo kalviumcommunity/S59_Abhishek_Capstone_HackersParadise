@@ -100,6 +100,14 @@ export default function Unit() {
                       and contacts, which can help you make informed career
                       decisions.
                     </p>
+                    <span className="font-bold">Basics of Linux</span>
+                  <div className="text-lg ml-8 mt-4">
+                    <p className="w-full">
+                      Networking is the process of making connections and building
+                      relationships. These connections can provide you with advice
+                      and contacts, which can help you make informed career
+                      decisions.
+                    </p>
                     <ol type="i" className="list-inside list-decimal mt-4 ml-8">
                       {data.items.map((item, index) => (
                         <li key={index} className="mt-2">
