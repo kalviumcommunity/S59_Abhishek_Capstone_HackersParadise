@@ -92,8 +92,7 @@ export default function Unit() {
             <>
               <ol className="list-inside list-decimal text-2xl leading-loose">
                 <li>
-                  <span className="font-bold">NETWORKING</span>
-                  <div className="text-lg ml-8 mt-4">
+                  <span className="font-bold">NETWORKING</span>\
                     <p className="w-full">
                       Networking is the process of making connections and building
                       relationships. These connections can provide you with advice
