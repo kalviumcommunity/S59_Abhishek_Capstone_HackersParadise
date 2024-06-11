@@ -1,5 +1,6 @@
 import React from "react";
 import search from '/search.svg'
+import {Link} from 'react-router-dom'
 
 
 export default function ModUnits() {
@@ -21,6 +22,13 @@ export default function ModUnits() {
           </div>
         </div>
       </div>
+      <div className="flex items-end w-[7vw]">
+          <Link to="/Unit">
+        <button className="w-full flex justify-center place-items-center rounded font-bold bg-gradient-to-r from-[#b25ffb] via-[#b25ffb] to-[#6300ff] text-white">
+          Start the Unit
+        </button>
+        </Link>
+        </div>
     </div>
   );
 }

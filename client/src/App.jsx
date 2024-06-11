@@ -8,6 +8,7 @@ import Modules from "./components/Modules";
 import Hactivity from "./components/Hactivity";
 import ModUnits from "./components/ModUnits"
 import AddHactivity from "./components/AddHactivity";
+import Unit from "./components/Unit";
 function App() {
   return (
     <>
@@ -20,6 +21,7 @@ function App() {
         <Route path="/Hactivity" element={<Hactivity />} />
         <Route path="/ModUnits" element={<ModUnits />} />
         <Route path="/AddHactivity" element={<AddHactivity />} />
+        <Route path="/Unit" element={<Unit />} />
       </Routes>
     </>
   );
