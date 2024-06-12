@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import search from "/search.svg";
 import like from "/like.png";
+import comment from "/comment.png";
 import { Link } from 'react-router-dom';
 
 export default function Hactivity() {
   const [likes, setLikes] = useState(0);
+  const [comments, setComments] = useState(0);
+  const [commentText, setCommentText] = useState("");
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
 
@@ -13,6 +16,7 @@ export default function Hactivity() {
       .then(response => response.json())
       .then(data => {
         setLikes(data.likes || 0);
+        setComments(data.comments.length || 0);
         setData(data);
       })
       .catch(error => {
@@ -37,6 +41,27 @@ export default function Hactivity() {
     });
   };
 
+  const handleComment = () => {
+    const newComment = { text: commentText, date: new Date() };
+
+    fetch("http://localhost:8080/api/hacktivity/comment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newComment),
+    })
+      .then(response => response.json())
+      .then(data => {
+        setComments(data.comments.length);
+        setCommentText("");
+        setError(null);
+      })
+      .catch(error => {
+        console.error("Error adding comment:", error);
+        setError("Failed to add comment.");
+      });
+  };
 
   return (
     <>
@@ -92,10 +117,21 @@ export default function Hactivity() {
               <img src={like} alt="likes Icon" className="w-[3rem] p-2 cursor-pointer" onClick={handleLike}></img>
               <span>{likes}</span>
             </div>
+            <div className="flex flex-col items-center">
+              <img src={comment} alt="comment Icon" className="w-[3rem] p-2 cursor-pointer" onClick={handleComment}></img>
+              <span>{comments}</span>
+            </div>
           </div>
         </div>
         <div className="bg-[#9f54ff] w-[80%] m-auto mb-[5vh] text-white flex justify-between rounded-xl">
-          <button className="p-2 bg-[#8e35ff] text-white">
+          <input
+            type="text"
+            placeholder="Write a comment..."
+            value={commentText}
+            onChange={(e) => setCommentText(e.target.value)}
+            className="w-full p-2 text-black"
+          />
+          <button onClick={handleComment} className="p-2 bg-[#8e35ff] text-white">
             Add Comment
           </button>
         </div>
