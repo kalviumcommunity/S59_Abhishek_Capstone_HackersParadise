@@ -6,9 +6,8 @@ import { Link } from 'react-router-dom';
 
 export default function Hactivity() {
   const [likes, setLikes] = useState(0);
-  const [comments, setComments] = useState(0);
+  const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
-  const [data, setData] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -16,8 +15,7 @@ export default function Hactivity() {
       .then(response => response.json())
       .then(data => {
         setLikes(data.likes || 0);
-        setComments(data.comments.length || 0);
-        setData(data);
+        setComments(data.comments || []);
       })
       .catch(error => {
         console.error("Error fetching data:", error);
@@ -53,7 +51,7 @@ export default function Hactivity() {
     })
       .then(response => response.json())
       .then(data => {
-        setComments(data.comments.length);
+        setComments(data.comments);
         setCommentText("");
         setError(null);
       })
@@ -118,8 +116,8 @@ export default function Hactivity() {
               <span>{likes}</span>
             </div>
             <div className="flex flex-col items-center">
-              <img src={comment} alt="comment Icon" className="w-[3rem] p-2 cursor-pointer" onClick={handleComment}></img>
-              <span>{comments}</span>
+              <img src={comment} alt="comment Icon" className="w-[3rem] p-2 cursor-pointer"></img>
+              <span>{comments.length}</span>
             </div>
           </div>
         </div>
@@ -135,9 +133,19 @@ export default function Hactivity() {
             Add Comment
           </button>
         </div>
+        <div className="bg-[#9f54ff] w-[80%] m-auto mb-[5vh] text-white rounded-xl">
+          <div className="p-6">
+            <p className="text-[1.5rem] font-semibold">Comments:</p>
+            {comments.map((comment, index) => (
+              <div key={index} className="bg-[#8e35ff] p-4 my-2 rounded-xl">
+                <p>{comment.text}</p>
+                <span className="text-sm text-gray-400">{new Date(comment.date).toLocaleString()}</span>
+              </div>
+            ))}
+          </div>
+        </div>
         {error && <div className="text-red-500">{error}</div>}
       </div>
-      
     </>
   );
 }
