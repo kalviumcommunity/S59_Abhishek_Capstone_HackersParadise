@@ -22,7 +22,12 @@ const checkValidation = (input, schema) => {
     }
 }
 
+
 router.post('/register', async (req, res) => {
+    const findUser = await user.findOne({ mail: req.body.mail })
+    if (findUser) {
+        return res.status(409).json({ Error: "User already exists" })
+    }
     if (!checkValidation(req.body, validateLogin)) {
         return res.status(400).json({ "Error": "Data validation failed. Please add data as per the norms" })
     }
@@ -37,7 +42,6 @@ router.post('/register', async (req, res) => {
         res.status(201).json({ savedUser })
     }
     catch (err) {
-        console.log(err)
         res.status(500).json({ error: "An error occurred" })
     }
 })
