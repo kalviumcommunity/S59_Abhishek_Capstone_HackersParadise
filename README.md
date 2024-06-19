@@ -27,5 +27,8 @@ React
 **DataBase:**
 * MongoDB
 
+**Frontend Deployment:**
+https://hackersparadise1.netlify.app/
+
 **Backend Deployemnt:**  
 https://s59-abhishek-capstone-hackersparadise.onrender.com/
