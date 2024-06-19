@@ -38,10 +38,10 @@ export default function SignUp() {
     <>
      <div className="bg-[#000746] h-full">
       <form
-        className="shadow-xl w-[40vw] m-auto mt-0 px-5 my-12 py-10 pb-15 rounded"
+        className="shadow-xl w-[40vw] m-auto mt-0 pt-[10vh] px-5 my-12 py-10 pb-0 rounded"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <h3 className="text-center text-2xl font-bold text-blue-500">Join the Hacker's Community</h3>
+        <h3 className="text-center text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#d48ff9] via-[#9b41f8] to-[#6300ff]">Join the Hacker's Community</h3>
         <p className="text-center text-slate-500 font-semibold">Become a part of our ethical Hacking community!</p>
         <div className="flex flex-col mt-5 justify-center items-center">
           <input
@@ -92,18 +92,19 @@ export default function SignUp() {
             placeholder="Confirm password"
             {...register("pass", {
               required: "Please re-enter the password",
-              validate: (value) => value === watch("pass") || "Passwords do not match"
+              validate: (value) => value === watch("password") || "Passwords do not match"
             })}
           />
           
         </div>
-        <button type="submit" className="bg-blue-500 rounded px-3 py-1.5 text-white hover:bg-blue-700">
+        <div className="flex justify-center">
+        <button type="submit" className="h-[4vh] w-[20vw] rounded-[0.6rem] m-4 bg-gradient-to-b from-[#d48ff9] via-[#b25ffb] to-[#6300ff]">
             Create Account
-        </button>
+        </button></div>
         </form>
-          <p className="text-center">OR</p>
+          <p className="text-center text-white">OR</p>
           <Link to="/Login">
-          <div className="flex justify-center">
+          <div className="flex justify-center pb-[9.4vh]">
             <div className="w-[20vw] p-[0.2rem] m-4 bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] to-[#6300ff] rounded-md">
               <div className="flex justify-center bg-[#000746]">
                 <img src={create} alt="add" className="h-[3rem] p-2 pr-0" />
