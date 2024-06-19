@@ -1,11 +1,13 @@
 const express = require('express')
 let app = express();
+const cors = require('cors')
 const {connectDB, checkConnected}=require('./db.js')
 const routes = require('./routes.js')
 
 let port = 8080;
 
 connectDB()
+app.use(cors())
 app.get("/",(req,res)=>{
     if(checkConnected()){
         res.send("Data base connection successful!!")

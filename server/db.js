@@ -13,7 +13,7 @@ const connectDB = async()=>{
 
 const disconnectDB = async()=>{
     mongoose.disconnect()
-    console.log("MoongoDB Disconnected")
+    console.log("MongoDB Disconnected")
 }
 
 const checkConnected=()=>{

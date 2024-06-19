@@ -7,7 +7,7 @@ export default function Login() {
   return (
     <>
       <div className="bg-[#000746] h-full">
-        <div className="flex justify-center pt-[20vh] pb-[20vh]">
+        <div className="flex justify-center pt-[12vh] pb-[20vh]">
           <div className="flex flex-col text-white">
             <h1 className="text-[5vw] w-full text-center font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] via-[#6300ff] to-[#6300ff]">
               LOGIN

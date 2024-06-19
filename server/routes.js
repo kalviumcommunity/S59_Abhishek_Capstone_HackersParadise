@@ -1,8 +1,9 @@
 const express = require('express')
 const router = express.Router();
+const Joi = require('joi');
 const { connectDB } = require('./db.js')
-const Joi = require('joi')
 const user = require('./Schemas/userSchema.js')
+const bounty = require('./Schemas/BountySchema.js')
 
 const validateLogin = Joi.object({
     fname: Joi.string().required(),
@@ -21,7 +22,12 @@ const checkValidation = (input, schema) => {
     }
 }
 
+
 router.post('/register', async (req, res) => {
+    const findUser = await user.findOne({ mail: req.body.mail })
+    if (findUser) {
+        return res.status(409).json({ Error: "User already exists" })
+    }
     if (!checkValidation(req.body, validateLogin)) {
         return res.status(400).json({ "Error": "Data validation failed. Please add data as per the norms" })
     }
@@ -62,6 +68,27 @@ router.put('/update-user', async (req, res) => {
         res.status(500).json({ error: "An error occurred" });
     }
 });
+
+router.get('/bounties', async (req, res) => {
+    try {
+        const bounties = await bounty.find()
+        res.json(bounties)
+    }
+    catch (err) {
+        res.status(500).json(err)
+    }
+});
+
+router.post('/hactivity', async (req, res) => {
+    try {
+        const newHactivity = new Hactivity(req.body);
+        const savedHactivity = await newHactivity.save();
+        res.status(201).json(savedHactivity);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+        console.log(error)
+    }
+})
 
 connectDB()
 
