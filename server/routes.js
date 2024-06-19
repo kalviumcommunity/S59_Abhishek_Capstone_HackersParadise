@@ -69,6 +69,20 @@ router.put('/update-user', async (req, res) => {
     }
 });
 
+router.post('/login', async (req, res) => {
+    const findUser = await user.findOne({ password: req.body.password })
+    if (findUser) {
+        return res.json({ Message: "Login Successful!", name: findUser.fname})
+    }
+    else {
+        return res.status(401).json({ err })
+    }
+})
+
+router.post('/logout', async (req, res) => {
+    return res.json({ Message: "Logout successfull!" })
+})
+
 router.get('/bounties', async (req, res) => {
     try {
         const bounties = await bounty.find()
