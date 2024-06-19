@@ -38,22 +38,6 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.post('/comments', async (req, res) => {
-    const { comment } = req.body;
-
-    if (!comment) {
-        return res.status(400).send('Comment is required');
-    }
-
-    try {
-        const newComment = new Comment({ comment });
-        await newComment.save();
-        res.status(201).send(newComment);
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
-});
-
 router.put('/update-user', async (req, res) => {
     if (!checkValidation(req.body, validateLogin)) {
         return res.status(401).json({ error: "Unauthorized Login" });
@@ -79,7 +63,7 @@ router.put('/update-user', async (req, res) => {
 
 router.get('/bounties', async (req, res) => {
     try {
-        const bounties = await Bounty.find();
+        const bounties = await bounty.find();
         res.json(bounties);
     } catch (err) {
         res.status(500).json(err);
@@ -97,6 +81,22 @@ router.post('/hactivity', async (req, res) => {
     }
 });
 
+
+router.post('/comments', async (req, res) => {
+    const { comment } = req.body;
+
+    if (!comment) {
+        return res.status(400).send('Comment is required');
+    }
+
+    try {
+        const newComment = new Comment({ comment });
+        await newComment.save();
+        res.status(201).send(newComment);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
 connectDB();
 
 module.exports = router;

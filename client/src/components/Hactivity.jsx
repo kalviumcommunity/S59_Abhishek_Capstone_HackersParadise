@@ -14,7 +14,7 @@ export default function Hactivity() {
     fetch("http://localhost:8080/api/hacktivity")
       .then(response => response.json())
       .then(data => {
-        setLikes(data.likes || 0);
+        
         setComments(data.comments || []);
       })
       .catch(error => {
