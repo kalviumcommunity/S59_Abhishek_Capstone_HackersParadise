@@ -46,6 +46,18 @@ router.post('/register', async (req, res) => {
     }
 })
 
+router.put('/bounties-update/:id', async (req, res)=>{
+    try {
+        const newBounty = await bounty.findByIdAndUpdate(req.id, req.body, { new: true });
+        if (!newBounty) {
+            return res.status(404).json({ error: "bounty Not Found"})
+        }
+        res.json(newBounty);
+    } catch (err) {
+        res.status(500).send('Error: ' + err);
+    }
+})
+
 router.put('/update-user', async (req, res) => {
     if (!checkValidation()) {
         return res.status(401).json({ error: "Unauthorized Login" });
@@ -53,7 +65,7 @@ router.put('/update-user', async (req, res) => {
     const userId = req.user.id;
 
     try {
-        const updatedUser = await User.findByIdAndUpdate(userId, {
+        const updatedUser = await user.findByIdAndUpdate(userId, {
             fname: req.body.fname,
             lname: req.body.lname,
             mail: req.body.mail

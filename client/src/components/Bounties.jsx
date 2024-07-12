@@ -19,7 +19,7 @@ export default function Bounties() {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/bounties/${id}`, {
+      const response = await fetch(`http://localhost:8080/api/bounties-delete/${id}`, {
         method: 'DELETE',
       });
       if (response.status === 204) {
@@ -34,7 +34,7 @@ export default function Bounties() {
 
   const handleUpdate = async (bounty) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/bounties/${bounty.id}`, {
+      const response = await fetch(`http://localhost:8080/api/bounties-update/${bounty.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
