@@ -1,26 +1,23 @@
-const express = require('express')
+const express = require('express');
 const router = express.Router();
 const Joi = require('joi');
-const { connectDB } = require('./db.js')
-const user = require('./Schemas/userSchema.js')
-const bounty = require('./Schemas/BountySchema.js')
+const { connectDB } = require('./db.js');
+const User = require('./Schemas/userSchema.js');
+const bounty = require('./Schemas/BountySchema.js');
+const Comment = require('./Schemas/CommentSchema.js');
+const Hactivity = require('./Schemas/HactivitySchema.js');
 
 const validateLogin = Joi.object({
     fname: Joi.string().required(),
     lname: Joi.string(),
     mail: Joi.string().required(),
     password: Joi.string().required(),
-})
+});
 
 const checkValidation = (input, schema) => {
-    const { error } = schema.validate(input)
-    if (error) {
-        return false
-    }
-    else {
-        return true
-    }
-}
+    const { error } = schema.validate(input);
+    return !error;
+};
 
 
 router.post('/register', async (req, res) => {
@@ -29,22 +26,38 @@ router.post('/register', async (req, res) => {
         return res.status(409).json({ Error: "User already exists" })
     }
     if (!checkValidation(req.body, validateLogin)) {
-        return res.status(400).json({ "Error": "Data validation failed. Please add data as per the norms" })
+        return res.status(400).json({ "Error": "Data validation failed. Please add data as per the norms" });
     }
-    const newUser = new user({
+    const newUser = new User({
         fname: req.body.fname,
         lname: req.body.lname,
         mail: req.body.mail,
         password: req.body.password,
-    })
+    });
     try {
-        const savedUser = await newUser.save()
-        res.status(201).json({ savedUser })
+        const savedUser = await newUser.save();
+        res.status(201).json({ savedUser });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: "An error occurred" });
     }
-    catch (err) {
-        res.status(500).json({ error: "An error occurred" })
+});
+
+router.post('/comments', async (req, res) => {
+    const { comment } = req.body;
+
+    if (!comment) {
+        return res.status(400).send('Comment is required');
     }
-})
+
+    try {
+        const newComment = new Comment({ comment });
+        await newComment.save();
+        res.status(201).send(newComment);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
 
 router.put('/bounties-update/:id', async (req, res)=>{
     try {
@@ -60,7 +73,7 @@ router.put('/bounties-update/:id', async (req, res)=>{
 })
 
 router.put('/update-user', async (req, res) => {
-    if (!checkValidation()) {
+    if (!checkValidation(req.body, validateLogin)) {
         return res.status(401).json({ error: "Unauthorized Login" });
     }
     const userId = req.user.id;
@@ -70,7 +83,7 @@ router.put('/update-user', async (req, res) => {
             fname: req.body.fname,
             lname: req.body.lname,
             mail: req.body.mail
-        }, { new: true }); 
+        }, { new: true });
 
         if (!updatedUser) {
             return res.status(404).json({ error: "User not found" });
@@ -98,11 +111,10 @@ router.post('/logout', async (req, res) => {
 
 router.get('/bounties', async (req, res) => {
     try {
-        const bounties = await bounty.find()
-        res.json(bounties)
-    }
-    catch (err) {
-        res.status(500).json(err)
+        const bounties = await Bounty.find();
+        res.json(bounties);
+    } catch (err) {
+        res.status(500).json(err);
     }
 });
 
@@ -113,10 +125,10 @@ router.post('/hactivity', async (req, res) => {
         res.status(201).json(savedHactivity);
     } catch (error) {
         res.status(400).json({ error: error.message });
-        console.log(error)
+        console.log(error);
     }
-})
+});
 
-connectDB()
+connectDB();
 
-module.exports = router
+module.exports = router;
