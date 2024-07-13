@@ -48,7 +48,8 @@ router.post('/register', async (req, res) => {
 
 router.put('/bounties-update/:id', async (req, res)=>{
     try {
-        const newBounty = await bounty.findByIdAndUpdate(req.id, req.body, { new: true });
+        const Id = req.params.id
+        const newBounty = await bounty.findByIdAndUpdate(Id, req.body, { new: true });
         if (!newBounty) {
             return res.status(404).json({ error: "bounty Not Found"})
         }
