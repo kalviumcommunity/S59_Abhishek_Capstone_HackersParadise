@@ -9,6 +9,7 @@ import Hactivity from "./components/Hactivity";
 import ModUnits from "./components/ModUnits"
 import AddHactivity from "./components/AddHactivity";
 import Unit from "./components/Unit";
+import SignUp from "./components/SignUp"
 function App() {
   return (
     <>
@@ -22,6 +23,7 @@ function App() {
         <Route path="/ModUnits" element={<ModUnits />} />
         <Route path="/AddHactivity" element={<AddHactivity />} />
         <Route path="/Unit" element={<Unit />} />
+        <Route path="/SignUp" element={<SignUp />} />
       </Routes>
     </>
   );
