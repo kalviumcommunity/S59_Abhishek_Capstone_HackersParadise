@@ -6,6 +6,7 @@ const User = require('./Schemas/userSchema.js');
 const bounty = require('./Schemas/BountySchema.js');
 const Comment = require('./Schemas/CommentSchema.js');
 const Hactivity = require('./Schemas/HactivitySchema.js');
+const units = require('./Schemas/UnitsSchema.js')
 
 const validateLogin = Joi.object({
     fname: Joi.string().required(),
@@ -18,7 +19,6 @@ const checkValidation = (input, schema) => {
     const { error } = schema.validate(input);
     return !error;
 };
-
 
 router.post('/register', async (req, res) => {
     const findUser = await user.findOne({ mail: req.body.mail })
@@ -111,13 +111,23 @@ router.post('/logout', async (req, res) => {
 
 router.get('/bounties', async (req, res) => {
     try {
-        const bounties = await Bounty.find();
-        res.json(bounties);
-    } catch (err) {
-        res.status(500).json(err);
+        const bounties = await bounty.find()
+        res.json(bounties)
+    }
+    catch (err) {
+        res.status(500).json(err)
     }
 });
 
+router.get('/units', async (req, res) => {
+    try {
+        const modUnits = await units.find()
+        res.json(modUnits)
+    }
+    catch(err){
+        res.status(500).json(err)
+    }
+})
 router.post('/hactivity', async (req, res) => {
     try {
         const newHactivity = new Hactivity(req.body);
