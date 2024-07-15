@@ -20,15 +20,6 @@ const checkValidation = (input, schema) => {
     return !error;
 };
 
-    const { error } = schema.validate(input)
-    if (error) {
-        return false
-    }
-    else {
-        return true
-    }
-}
-
 router.post('/register', async (req, res) => {
     const findUser = await user.findOne({ mail: req.body.mail })
     if (findUser) {
