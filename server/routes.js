@@ -4,6 +4,7 @@ const Joi = require('joi');
 const { connectDB } = require('./db.js')
 const user = require('./Schemas/userSchema.js')
 const bounty = require('./Schemas/BountySchema.js')
+const units = require('./Schemas/UnitsSchema.js')
 
 const validateLogin = Joi.object({
     fname: Joi.string().required(),
@@ -21,7 +22,6 @@ const checkValidation = (input, schema) => {
         return true
     }
 }
-
 
 router.post('/register', async (req, res) => {
     const findUser = await user.findOne({ mail: req.body.mail })
@@ -93,6 +93,15 @@ router.get('/bounties', async (req, res) => {
     }
 });
 
+router.get('/units', async (req, res) => {
+    try {
+        const modUnits = await units.find()
+        res.json(modUnits)
+    }
+    catch(err){
+        res.status(500).json(err)
+    }
+})
 router.post('/hactivity', async (req, res) => {
     try {
         const newHactivity = new Hactivity(req.body);
