@@ -1,12 +1,26 @@
-import React from "react";
-import search from '/search.svg'
-import {Link} from 'react-router-dom'
-
+import React, { useState, useEffect } from "react";
+import search from "/search.svg";
+import { Link } from "react-router-dom";
 
 export default function ModUnits() {
+  const [data, setData] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/units");
+      const result = await response.json();
+      console.log("Fetched data:", result);
+      setData(result);
+    } catch (err) {
+      console.log("Error fetching data:", err);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div className="bg-[#000746] h-full">
-      <h1 className="text-[4vw] text-white ml-[2vw]">1. NETWORKING</h1>
       <div className="pt-[4vh] pb-[4vh]">
         <div className="m-auto p-[0.2rem] bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] to-[#6300ff] rounded-[0.9rem] w-[40vw]">
           <div className="flex justify-between bg-[#000746] p-[0.2rem] pr-[1rem] pl-[1rem] rounded-xl">
@@ -22,13 +36,25 @@ export default function ModUnits() {
           </div>
         </div>
       </div>
-      <div className="flex items-end w-[7vw]">
-          <Link to="/Unit">
-        <button className="w-full flex justify-center place-items-center rounded font-bold bg-gradient-to-r from-[#b25ffb] via-[#b25ffb] to-[#6300ff] text-white">
-          Start the Unit
-        </button>
-        </Link>
+      {data.map((unit) => (
+        <div key={unit.unitName}>
+          <h1 className="text-[4vw] text-white ml-[2vw]">{unit.unitName}</h1>
+          <div className="flex flex-wrap w-[50vw]">
+            {unit.names.map((name, index) => (
+              <Link to="/Unit">
+                <div
+                  key={index}
+                  className="bg-[#9f54ff] w-[50vw] m-auto mb-[5vh] text-white flex justify-between rounded-xl"
+                >
+                  <div className="p-6">
+                    <p className="text-[1.5rem] font-semibold">{name}</p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
+      ))}
     </div>
   );
 }
