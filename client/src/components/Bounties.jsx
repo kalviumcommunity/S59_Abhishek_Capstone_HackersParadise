@@ -13,28 +13,28 @@ export default function Bounties() {
       console.log("Fetched data:", result);
       setData(result);
     } catch (err) {
-      console.error("Error fetching data:", err);
+      console.log("Error fetching data:", err);
     }
   };
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/bounties/${id}`, {
+      const response = await fetch(`http://localhost:8080/api/bounties-delete/${id}`, {
         method: 'DELETE',
       });
       if (response.status === 204) {
-        setData(data.filter((bounty) => bounty.id !== id));
+        setData(data.filter((bounty) => bounty._id !== id));
       } else {
-        console.error(`Error deleting data: Received status ${response.status}`);
+        console.log(`Error deleting data: Received status ${response.status}`);
       }
     } catch (err) {
-      console.error("Error deleting data:", err);
+      console.log("Error deleting data:", err);
     }
   };
 
   const handleUpdate = async (bounty) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/bounties/${bounty.id}`, {
+      const response = await fetch(`http://localhost:8080/api/bounties-update/${bounty._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ export default function Bounties() {
       setEditMode(false);
       setEditBounty(null);
     } catch (err) {
-      console.error("Error updating data:", err);
+      console.log("Error updating data:", err);
     }
   };
 
@@ -73,32 +73,33 @@ export default function Bounties() {
             </div>
           </div>
         </div>
+        <div className='flex flex-wrap w-full justify-center'>
         {data.map((bounty) => (
-          <div key={bounty.id} className="h-full w-[20vw] bg-[#b25ffb] m-4 rounded">
+          <div key={bounty.id} className="h-full w-[20vw] bg-[#b25ffb] m-[2vw] rounded">
             <div className="flex place-items-center justify-between place-h-[10vh] w-full shadow-2xl p-4 font-bold">
               <div className="flex place-items-center">
-                <img src={bounty.imgURL} alt="" className="h-[6vh]"></img>
+                <img src={bounty.imgURL} alt="" className="h-[6vh] rounded"></img>
                 <p className="ml-2">{bounty.company}</p>
               </div>
               <div>
-                <p>{bounty.reward}</p>
+                <p>${bounty.reward}</p>
               </div>
             </div>
             <div className="m-6">
               <p className="font-bold mb-2">Bug Bounty Program</p>
               <button className="h-[4vh] bg-green-200 p-[0.5vh] rounded text-green-700 font-bold mb-2">campaign</button>
               <p className="text-[0.8vw]">Triaged by HackerOne, Retesting, Collaboration</p>
-              <button className="h-[4vh] bg-gray-200 p-[0.5vh] rounded text-gray-900 font-bold mt-2 mr-2">Other Asset</button>
-              <button className="h-[4vh] bg-gray-200 p-[0.5vh] rounded text-gray-900 font-bold mt-2 mr-2">Executable</button>
+              <button className="h-[4vh] bg-gray-200 p-[0.5vh] rounded text-gray-600 font-bold mt-2 mr-2">Other Asset</button>
+              <button className="h-[4vh] bg-gray-200 p-[0.5vh] rounded text-gray-600 font-bold mt-2 mr-2">Executable</button>
               <br />
-              <button className="h-[4vh] bg-gray-200 p-[0.5vh] rounded text-gray-900 font-bold mt-2 mr-2">Wildcard</button>
+              <button className="h-[4vh] bg-gray-200 p-[0.5vh] rounded text-gray-600 font-bold mt-2 mr-2">Wildcard</button>
             </div>
             <div className="flex justify-center">
               <button className="h-[4vh] w-[90%] bg-purple-700 p-[0.5vh] rounded text-white font-bold mb-2">See Details</button>
             </div>
             <div className="flex justify-around mt-2">
               <button 
-                className="h-[4vh] w-[40%] bg-yellow-500 p-[0.5vh] rounded text-white font-bold mb-2"
+                className="h-[4vh] w-[40%] bg-purple-600 p-[0.5vh] rounded text-white font-bold mb-2"
                 onClick={() => {
                   setEditMode(true);
                   setEditBounty(bounty);
@@ -107,7 +108,7 @@ export default function Bounties() {
                 Edit
               </button>
               <button 
-                className="h-[4vh] w-[40%] bg-red-500 p-[0.5vh] rounded text-white font-bold mb-2"
+                className="h-[4vh] w-[40%] bg-purple-900 p-[0.5vh] rounded text-white font-bold mb-2"
                 onClick={() => handleDelete(bounty.id)}
               >
                 Delete
@@ -115,6 +116,7 @@ export default function Bounties() {
             </div>
           </div>
         ))}
+        </div>
         {editMode && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
             <div className="bg-white p-4 rounded">
