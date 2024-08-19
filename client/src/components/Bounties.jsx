@@ -8,18 +8,20 @@ export default function Bounties() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/bounties");
+      const response = await fetch(`${import.meta.env.VITE_BOUNTY_API}`);
       const result = await response.json();
+       
       console.log("Fetched data:", result);
       setData(result);
     } catch (err) {
+      console.log(import.meta.env.BOUNTY_API)
       console.log("Error fetching data:", err);
     }
   };
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/bounties-delete/${id}`, {
+      const response = await fetch(`https://s59-abhishek-capstone-hackersparadise.onrender.com/api/bounties-delete/${id}`, {
         method: 'DELETE',
       });
       if (response.status === 204) {
@@ -34,7 +36,7 @@ export default function Bounties() {
 
   const handleUpdate = async (bounty) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/bounties-update/${bounty._id}`, {
+      const response = await fetch(`https://s59-abhishek-capstone-hackersparadise.onrender.com/api/bounties-update/${bounty._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
