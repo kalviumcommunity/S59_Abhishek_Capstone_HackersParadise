@@ -42,7 +42,7 @@ export default function Hactivity() {
   const handleComment = () => {
     const newComment = { text: commentText, date: new Date() };
 
-    fetch("http://localhost:8080/api/hacktivity/comment", {
+    fetch("https://s59-abhishek-capstone-hackersparadise.onrender.com/api/hacktivity/comment", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

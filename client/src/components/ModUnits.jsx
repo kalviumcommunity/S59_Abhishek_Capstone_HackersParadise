@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import search from "/search.svg";
 import { Link } from "react-router-dom";
 
+
 export default function ModUnits() {
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/units");
+      const response = await fetch(import.meta.env.VITE_UNITS_API);
       const result = await response.json();
       console.log("Fetched data:", result);
       setData(result);
