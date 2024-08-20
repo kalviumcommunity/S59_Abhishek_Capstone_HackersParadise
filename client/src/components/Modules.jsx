@@ -39,7 +39,7 @@ export default function Modules() {
           </div>
         </div>
 
-        <div className="flex justify-center pb-[10vh]">
+        <div className="flex justify-center pb-[2vh]">
           <div className="m-[2vw] ml-[5vw] w-[50vh] bg-[#5711af] rounded-xl">
             <img src={module} alt="module" className="h-full w-full"></img>
           </div>
@@ -64,14 +64,14 @@ export default function Modules() {
             </ol>
           </div>
         </div>
-        <div className="flex items-end w-[7vw]">
+        <div className="flex ml-[90vw] w-[7vw] pb-[22vh]">
           <Link to="/ModUnits">
         <button className="w-full flex justify-center place-items-center rounded font-bold bg-gradient-to-r from-[#b25ffb] via-[#b25ffb] to-[#6300ff] text-white">
           Start the Course
         </button>
         </Link>
         </div>
-        <hr className="bg-[#5711af] w-full" />
+        <hr className="bg-[#5711af] w-full h-[1vh]" />
       </div>
     </>
   );
