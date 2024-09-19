@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Joi = require('joi');
-const { connectDB } = require('./db.js');
-const User = require('./Schemas/userSchema.js');
-const bounty = require('./Schemas/BountySchema.js');
-const Comment = require('./Schemas/CommentSchema.js');
-const Hactivity = require('./Schemas/HactivitySchema.js');
-const units = require('./Schemas/UnitsSchema.js')
+const { connectDB } = require('../config/db.js');
+const User = require('../Schemas/userSchema.js');
+const bounty = require('../Schemas/BountySchema.js');
+const Comment = require('../Schemas/CommentSchema.js');
+const Hactivity = require('../Schemas/HactivitySchema.js');
+const units = require('../Schemas/UnitsSchema.js')
 
 const validateLogin = Joi.object({
     fname: Joi.string().required(),

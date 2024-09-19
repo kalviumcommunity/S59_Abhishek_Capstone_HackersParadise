@@ -90,7 +90,7 @@ export default function Hactivity() {
                 Sort By
               </button>
             </div>
-            <div className="p-0.5 h-[5.4vh]  w-[6vw] bg-gradient-to-r from-[#b25ffb] to-[#6300ff] rounded">
+            <div className="p-0.5 h-[5.47vh]  w-[6vw] bg-gradient-to-r from-[#b25ffb] to-[#6300ff] rounded">
               <Link to="/AddHactivity">
                 <button className="text-white w-full bg-[#000746] font-bold p-2 rounded">
                   Add

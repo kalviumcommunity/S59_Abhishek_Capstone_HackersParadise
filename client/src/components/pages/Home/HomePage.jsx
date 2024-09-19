@@ -2,7 +2,7 @@ import React from "react";
 import activity from "/activity.png";
 import bug from "/bug.png";
 import learning from "/learning.png";
-import SliderHome from "./SliderHome";
+import SliderHome from "../../SliderHome";
 import icon from "/icon-g.png";
 import arrow from "/arrow.png";
 import { Link } from "react-router-dom";
