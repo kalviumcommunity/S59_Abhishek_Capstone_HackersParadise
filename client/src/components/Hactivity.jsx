@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import search from "/search.svg";
 import like from "/like.png";
 import comment from "/comment.png";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export default function Hactivity() {
   const [likes, setLikes] = useState(0);
@@ -12,12 +12,11 @@ export default function Hactivity() {
 
   useEffect(() => {
     fetch("http://localhost:8080/api/hacktivity")
-      .then(response => response.json())
-      .then(data => {
-        
-        setComments(data.comments || []);
-      })
-      .catch(error => {
+      .then((response) => response.json())
+      // .then((data) => {
+      //   setComments(data.comments || []);
+      // })
+      .catch((error) => {
         console.error("Error fetching data:", error);
         setError("Failed to fetch data.");
       });
@@ -33,7 +32,7 @@ export default function Hactivity() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ likes: newLikes }),
-    }).catch(error => {
+    }).catch((error) => {
       console.error("Error updating likes:", error);
       setError("Failed to update likes.");
     });
@@ -41,7 +40,7 @@ export default function Hactivity() {
 
   const handleComment = () => {
     const newComment = { text: commentText, date: new Date() };
-
+  
     fetch("https://s59-abhishek-capstone-hackersparadise.onrender.com/api/hacktivity/comment", {
       method: "POST",
       headers: {
@@ -49,7 +48,6 @@ export default function Hactivity() {
       },
       body: JSON.stringify(newComment),
     })
-      .then(response => response.json())
       .then(data => {
         setComments(data.comments);
         setCommentText("");
@@ -60,6 +58,7 @@ export default function Hactivity() {
         setError("Failed to add comment.");
       });
   };
+  
 
   return (
     <>
@@ -92,11 +91,11 @@ export default function Hactivity() {
               </button>
             </div>
             <div className="p-0.5 h-[5.4vh]  w-[6vw] bg-gradient-to-r from-[#b25ffb] to-[#6300ff] rounded">
-              <Link to="/AddHactivity"> 
+              <Link to="/AddHactivity">
                 <button className="text-white w-full bg-[#000746] font-bold p-2 rounded">
                   Add
                 </button>
-              </Link>  
+              </Link>
             </div>
           </div>
         </div>
@@ -112,24 +111,36 @@ export default function Hactivity() {
           </div>
           <div className="bg-[#8e35ff] p-4 rounded-xl flex items-center">
             <div className="flex flex-col items-center mr-4">
-              <img src={like} alt="likes Icon" className="w-[3rem] p-2 cursor-pointer" onClick={handleLike}></img>
+              <img
+                src={like}
+                alt="likes Icon"
+                className="w-[3rem] p-2 cursor-pointer"
+                onClick={handleLike}
+              ></img>
               <span>{likes}</span>
             </div>
             <div className="flex flex-col items-center">
-              <img src={comment} alt="comment Icon" className="w-[3rem] p-2 cursor-pointer"></img>
+              <img
+                src={comment}
+                alt="comment Icon"
+                className="w-[3rem] p-2 cursor-pointer"
+              ></img>
               <span>{comments.length}</span>
             </div>
           </div>
         </div>
-        <div className="bg-[#9f54ff] w-[80%] m-auto mb-[5vh] text-white flex justify-between rounded-xl">
+        <div className="bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] to-[#6300ff] w-[80%] m-auto mb-[5vh] text-white flex justify-between items-center p-4 rounded-xl">
           <input
             type="text"
             placeholder="Write a comment..."
             value={commentText}
             onChange={(e) => setCommentText(e.target.value)}
-            className="w-full p-2 text-black"
+            className="w-full p-2 mr-4 text-black bg-white rounded-lg outline-none"
           />
-          <button onClick={handleComment} className="p-2 bg-[#8e35ff] text-white">
+          <button
+            onClick={handleComment}
+            className="p-2 bg-[#6300ff] hover:bg-[#8e35ff] text-white font-bold rounded-lg transition-all"
+          >
             Add Comment
           </button>
         </div>
@@ -137,9 +148,14 @@ export default function Hactivity() {
           <div className="p-6">
             <p className="text-[1.5rem] font-semibold">Comments:</p>
             {comments.map((comment, index) => (
-              <div key={index} className="bg-[#8e35ff] p-4 my-2 rounded-xl">
-                <p>{comment.text}</p>
-                <span className="text-sm text-gray-400">{new Date(comment.date).toLocaleString()}</span>
+              <div
+                key={index}
+                className="bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] to-[#6300ff] p-4 my-4 rounded-xl"
+              >
+                <p className="text-white font-semibold">{comment.text}</p>
+                <span className="text-sm text-gray-300 italic">
+                  {new Date(comment.date).toLocaleString()}
+                </span>
               </div>
             ))}
           </div>

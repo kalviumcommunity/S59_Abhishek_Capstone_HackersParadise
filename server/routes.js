@@ -21,7 +21,7 @@ const checkValidation = (input, schema) => {
 };
 
 router.post('/register', async (req, res) => {
-    const findUser = await user.findOne({ mail: req.body.mail })
+    const findUser = await User.findOne({ mail: req.body.mail })
     if (findUser) {
         return res.status(409).json({ Error: "User already exists" })
     }
@@ -40,22 +40,6 @@ router.post('/register', async (req, res) => {
     } catch (err) {
         console.log(err);
         res.status(500).json({ error: "An error occurred" });
-    }
-});
-
-router.post('/comments', async (req, res) => {
-    const { comment } = req.body;
-
-    if (!comment) {
-        return res.status(400).send('Comment is required');
-    }
-
-    try {
-        const newComment = new Comment({ comment });
-        await newComment.save();
-        res.status(201).send(newComment);
-    } catch (error) {
-        res.status(500).send(error.message);
     }
 });
 
@@ -96,7 +80,7 @@ router.put('/update-user', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-    const findUser = await user.findOne({ password: req.body.password })
+    const findUser = await User.findOne({ password: req.body.password })
     if (findUser) {
         return res.json({ Message: "Login Successful!", name: findUser.fname})
     }
@@ -140,7 +124,7 @@ router.post('/hactivity', async (req, res) => {
 });
 
 
-router.post('/comments', async (req, res) => {
+router.post('/hacktivity/comment', async (req, res) => {
     const { comment } = req.body;
 
     if (!comment) {
