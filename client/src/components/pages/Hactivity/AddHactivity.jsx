@@ -1,6 +1,5 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import search from "/search.svg";
 
 export default function AddHactivity() {
     const { register, handleSubmit, reset } = useForm();
