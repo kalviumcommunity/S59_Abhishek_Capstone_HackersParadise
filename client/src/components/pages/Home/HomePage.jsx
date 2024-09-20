@@ -1,10 +1,10 @@
 import React from "react";
-import activity from "/activity.png";
-import bug from "/bug.png";
-import learning from "/learning.png";
-import SliderHome from "../../SliderHome";
-import icon from "/icon-g.png";
-import arrow from "/arrow.png";
+import activity from "../../../../public/activity.png";
+import bug from "../../../../public/bug.png";
+import learning from "../../../../public/learning.png";
+import SliderHome from "./SliderHome";
+import icon from "../../../../public/icon-g.png";
+import arrow from "../../../../public/arrow.png";
 import { Link } from "react-router-dom";
 
 export default function HomePage() {

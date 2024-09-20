@@ -1,8 +1,8 @@
 const express = require('express')
 let app = express();
 const cors = require('cors')
-const {connectDB, checkConnected}=require('./db.js')
-const routes = require('./routes.js')
+const {connectDB, checkConnected}=require('./config/db.js')
+const routes = require('./Routes/routes.js')
 
 let port = 8080;
 

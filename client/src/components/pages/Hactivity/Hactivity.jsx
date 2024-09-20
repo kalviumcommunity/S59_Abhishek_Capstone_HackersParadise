@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import search from "/search.svg";
-import like from "/like.png";
-import comment from "/comment.png";
+import search from "../../../../public/search.svg";
+import like from "../../../../public/like.png";
+import comment from "../../../../public/comment.png";
 import { Link } from "react-router-dom";
 
 export default function Hactivity() {
