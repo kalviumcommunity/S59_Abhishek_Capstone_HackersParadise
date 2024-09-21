@@ -1,0 +1,18 @@
+.gradient-bar {
+    background: linear-gradient(to right, #d48ff9, #b25ffb, #6300ff);
+    background-size: 200% 200%;
+    animation: gradientAnimation 3s ease infinite;
+  }
+  
+  @keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  

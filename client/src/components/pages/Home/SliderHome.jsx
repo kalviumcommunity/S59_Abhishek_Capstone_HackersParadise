@@ -18,6 +18,16 @@ function SliderHome() {
   };
   return (
     <div className="slider-container w-[90%] m-auto">
+      <style>
+        {`
+          .slick-dots li button:before {
+            color: white; 
+          }
+          .slick-dots li.slick-active button:before {
+            color: white; 
+          }
+        `}
+      </style>
       <Slider {...settings}>
         <div className="flex justify-center">
           <div className="flex justify-center mt-[5vh] mb-[2vh]">
