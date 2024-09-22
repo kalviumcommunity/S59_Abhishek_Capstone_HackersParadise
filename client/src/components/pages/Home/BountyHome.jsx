@@ -59,9 +59,11 @@ export default function BountyHome(){
                 </button>
               </div>
               <div className="flex justify-center">
-                <button className="h-[4vh] w-[90%] bg-purple-700 p-[0.5vh] rounded text-white font-bold mb-2">
+              <a href={bounty.info} target="_blank" rel="noopener noreferrer">
+                <button className="h-[4vh] w-[17vw] bg-purple-700 p-[0.5vh] rounded text-white font-bold mb-2">
                   See Details
                 </button>
+                </a>
               </div>
             </div>
               ))}

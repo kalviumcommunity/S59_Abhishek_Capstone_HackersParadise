@@ -97,7 +97,10 @@ export default function Bounties() {
               <button className="h-[4vh] bg-gray-200 p-[0.5vh] rounded text-gray-600 font-bold mt-2 mr-2">Wildcard</button>
             </div>
             <div className="flex justify-center">
-              <button className="h-[4vh] w-[90%] bg-purple-700 p-[0.5vh] rounded text-white font-bold mb-2">See Details</button>
+            <a href={bounty.info} target="_blank" rel="noopener noreferrer">
+              <button className="h-[4vh] w-[18vw] bg-purple-700 p-[0.5vh] rounded text-white font-bold mb-2">
+                See Details</button>
+                </a>
             </div>
             <div className="flex justify-around mt-2">
               <button 
