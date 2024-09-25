@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const Joi = require('joi');
+const jwt = require('jsonwebtoken')
 const { connectDB } = require('../config/db.js');
 const User = require('../Schemas/userSchema.js');
 const bounty = require('../Schemas/BountySchema.js');
 const Comment = require('../Schemas/CommentSchema.js');
 const Hactivity = require('../Schemas/HactivitySchema.js');
 const units = require('../Schemas/UnitsSchema.js')
+const SECRET = process.env.SECRET
 
 const validateLogin = Joi.object({
     fname: Joi.string().required(),
@@ -80,14 +82,22 @@ router.put('/update-user', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-    const findUser = await User.findOne({ password: req.body.password })
-    if (findUser) {
-        return res.json({ Message: "Login Successful!", name: findUser.fname})
+    try {
+        const findUser = await User.findOne({ mail: req.body.mail });
+        if (findUser) {
+            const token = jwt.sign({ userId: findUser._id }, SECRET, { expiresIn: '6h' });
+            return res.json({
+                Message: "Login Successful!",
+                name: findUser.fname,
+                accessToken: token
+            });
+        } else {
+            return res.status(401).json({ message: "Invalid email or password" });
+        }
+    } catch (error) {
+        return res.status(500).json({ message: "Server error", error });
     }
-    else {
-        return res.status(401).json({ err })
-    }
-})
+});
 
 router.post('/logout', async (req, res) => {
     return res.json({ Message: "Logout successfull!" })

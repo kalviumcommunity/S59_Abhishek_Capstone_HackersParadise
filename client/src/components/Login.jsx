@@ -2,25 +2,31 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import create from "/create.png";
+
 export default function Login() {
   const { register, handleSubmit } = useForm();
   const [resp, setResp] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
-  const authUser = async (data) => {
-    try {
-      const response = await fetch(
-        import.meta.env.VITE_LOGIN_API,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ password: data.password }),
-        }
-      );
 
+  const authUser = async (data) => {
+    console.log("hello");
+    try {
+      const response = await fetch('http://localhost:8080/api/login', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mail: data.mail }),
+      });
       const responseText = await response.json();
       if (response.ok) {
         console.log("Login Successful");
+        const accessToken = responseText.accessToken;
+        console.log(accessToken);
         setResp(responseText);
+        if (accessToken) {
+          setLoggedIn(true);
+          document.cookie = `user=${responseText.name}; expires=Fri, 31 Dec 2024 23:59:59 GMT; path=/;`;
+          document.cookie = `accessToken=${responseText.accessToken}; expires=Fri, 31 Dec 2024 23:59:59 GMT; path=/;`;
+        }
       } else {
         console.log("Login Failed");
       }
@@ -50,23 +56,17 @@ export default function Login() {
       console.log(err);
     }
   };
+
   useEffect(() => {
     console.log(resp);
   }, [resp]);
 
-  const doSubmit = async (data) => {
-    try {
-      await handleSubmit(authUser)(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
   return (
     <>
       <div className="bg-[#000746] h-full">
         <form
           className="shadow-2xl w-[40vw] m-auto pt-[11vw] pb-[11vw] rounded"
-          onSubmit={handleSubmit(doSubmit)}
+          onSubmit={handleSubmit(authUser)}
         >
           <h3 className="text-center text-[5vw] font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#d48ff9] via-[#9b41f8] to-[#6300ff]">
             LOGIN
@@ -112,7 +112,10 @@ export default function Login() {
                 </div>
               </Link>
               <div className="flex justify-center flex-col place-items-center">
-                <button className="font-bold h-[6vh] w-[10vw] rounded-[0.6rem] m-4 bg-gradient-to-b from-[#d48ff9] via-[#b25ffb] to-[#6300ff]">
+                <button
+                  className="font-bold h-[6vh] w-[10vw] rounded-[0.6rem] m-4 bg-gradient-to-b from-[#d48ff9] via-[#b25ffb] to-[#6300ff]"
+                  type="submit"
+                >
                   Sign In
                 </button>
               </div>
