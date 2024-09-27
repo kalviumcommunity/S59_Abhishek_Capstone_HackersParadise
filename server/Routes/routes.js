@@ -135,20 +135,21 @@ router.post('/hactivity', async (req, res) => {
 
 
 router.post('/hacktivity/comment', async (req, res) => {
-    const { comment } = req.body;
-
-    if (!comment) {
-        return res.status(400).send('Comment is required');
+    if (error) {
+        return res.status(400).send('Invalid data');
     }
 
     try {
-        const newComment = new Comment({ comment });
+        const { comment, date } = req.body;
+        const newComment = new Comment({ comment, date });
         await newComment.save();
         res.status(201).send(newComment);
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error'); 
+    }  res.status(500).send(error.message);
 });
+
 connectDB();
 
 module.exports = router;
