@@ -1,0 +1,18 @@
+meta {
+  name: POST comments
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8080/api/hacktivity/comment
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "comment": "hey! its awesome.",
+    "date": "2024-09-27T10:00:00Z"
+  }
+}

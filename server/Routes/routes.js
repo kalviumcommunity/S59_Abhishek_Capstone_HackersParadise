@@ -135,20 +135,24 @@ router.post('/hactivity', async (req, res) => {
 
 
 router.post('/hacktivity/comment', async (req, res) => {
-    const { comment } = req.body;
+    const { comment, date } = req.body;
 
     if (!comment) {
         return res.status(400).send('Comment is required');
     }
 
     try {
-        const newComment = new Comment({ comment });
+        const newComment = new Comment({
+            comment,
+            date: date || new Date()
+        });
         await newComment.save();
         res.status(201).send(newComment);
     } catch (error) {
         res.status(500).send(error.message);
     }
 });
+
 connectDB();
 
 module.exports = router;
