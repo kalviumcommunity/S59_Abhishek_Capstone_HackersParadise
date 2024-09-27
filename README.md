@@ -1,4 +1,4 @@
-# S59_Abhishek_Capstone_HackersParadise
+# Hacker's_Paradise
 
 ## Your Path to Ethical Hacking Mastery: 
 If you want to master the art of ethical hacking, then **Hacker’s Paradise** is everything you will need! From beginners to expert level, Hacker’s Paradise is one for everyone. We have got you covered for all your ethical hacking needs, from curated courses to bug bounty programs and practice, we are your one stop for ethical hacking.
