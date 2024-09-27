@@ -1,4 +1,4 @@
-# Hacker's_Paradise
+# Hacker's Paradise
 
 ## Your Path to Ethical Hacking Mastery: 
 If you want to master the art of ethical hacking, then **Hacker’s Paradise** is everything you will need! From beginners to expert level, Hacker’s Paradise is one for everyone. We have got you covered for all your ethical hacking needs, from curated courses to bug bounty programs and practice, we are your one stop for ethical hacking.
@@ -13,19 +13,19 @@ Dive into curated courses on all ethical hacking on your schedule spanning all t
 
 ## TechStack: 
 **Frontend:** 
-React
+ * React
  * Tailwind CSS
  * Material UI
 
 **Backend:**
-* Express.j
-
+* Express.js
 * Node.js
   
 **DataBase:**
 * MongoDB
+* Mongoose ORM
 
-**Frontend Deployment:**
+**Frontend Deployment:**<br/>
 https://hackersparadise1.netlify.app/
 
 **Backend Deployemnt:**  
