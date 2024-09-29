@@ -21,7 +21,7 @@ export default function Bounties() {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`https://s59-abhishek-capstone-hackersparadise.onrender.com/api/bounties-delete/${id}`, {
+      const response = await fetch(`https://s59-abhishek-capstone-hackersparadise.onrender.com/api/bounties-delete/${bounty._id}`, {
         method: 'DELETE',
       });
       if (response.status === 204) {
