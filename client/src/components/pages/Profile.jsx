@@ -52,7 +52,6 @@ const DashboardLayout = () => {
 
   return (
     <div className="flex h-screen bg-[#000746] text-white overflow-hidden">
-      {/* Sidebar */}
       <motion.div 
         initial={{ x: -300 }}
         animate={{ x: 0 }}
@@ -236,19 +235,6 @@ const DashboardLayout = () => {
           transition={{ duration: 0.5 }}
           className="mt-8"
         >
-          <Card className="bg-[#0a0d36] text-white">
-            <CardContent className='bg-[#6300ff]'>
-              <Typography variant="h6" className="mb-4">My Plan</Typography>
-              <Button 
-                variant="contained" 
-                fullWidth 
-                startIcon={<ShoppingCart />}
-                className="bg-[#6300ff] hover:bg-[#b25ffb]"
-              >
-                Subscribe now!
-              </Button>
-            </CardContent>
-          </Card>
         </motion.div>
       </div>
 
