@@ -8,7 +8,8 @@ import Hactivity from "./components/pages/Hactivity/Hactivity";
 import ModUnits from "./components/pages/Modules/ModUnits"
 import AddHactivity from "./components/pages/Hactivity/AddHactivity";
 import Unit from "./components/pages/Modules/Unit";
-import SignUp from "./components/SignUp"
+import SignUp from "./components/SignUp";
+import Profile from "./components/pages/Profile";
 function App() {
   return (
     <>
@@ -23,6 +24,7 @@ function App() {
         <Route path="/AddHactivity" element={<AddHactivity />} />
         <Route path="/Unit" element={<Unit />} />
         <Route path="/SignUp" element={<SignUp />} />
+        <Route path='/Profile' element={<Profile />} />
       </Routes>
     </>
   );
