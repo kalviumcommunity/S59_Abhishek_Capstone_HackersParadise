@@ -4,6 +4,7 @@ const cors = require('cors')
 const rateLimit = require('express-rate-limit')
 const {connectDB, checkConnected}=require('./config/db.js')
 const routes = require('./Routes/routes.js')
+require("./utils/cron.js")
 
 let port = 8080;
 
