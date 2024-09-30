@@ -122,6 +122,17 @@ router.get('/units', async (req, res) => {
         res.status(500).json(err)
     }
 })
+
+router.get('/hactivity', async (req, res) => {
+    try {
+      const hactivities = await Hactivity.find();
+      res.json(hactivities);
+    } catch (error) {
+      console.error("Error fetching hactivities:", error);
+      res.status(500).json({ error: "Failed to fetch hactivities." });
+    }
+  });
+
 router.post('/hactivity', async (req, res) => {
     try {
         const newHactivity = new Hactivity(req.body);
