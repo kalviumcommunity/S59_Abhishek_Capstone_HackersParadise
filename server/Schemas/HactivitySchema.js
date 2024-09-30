@@ -7,15 +7,12 @@ const HactivitySchema = new mongoose.Schema({
     },
     topic:{
         type : String,
-        required : true
     },
     level : {
         type: String,
-        required : true
     },
     info : {
         type : String,
-        required : true
     },
     tags : {
         type : String

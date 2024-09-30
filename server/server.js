@@ -1,8 +1,9 @@
 const express = require('express')
 let app = express();
 const cors = require('cors')
-const {connectDB, checkConnected}=require('./db.js')
-const routes = require('./routes.js')
+const rateLimit = require('express-rate-limit')
+const {connectDB, checkConnected}=require('./config/db.js')
+const routes = require('./Routes/routes.js')
 
 let port = 8080;
 
@@ -16,8 +17,14 @@ app.get("/",(req,res)=>{
         res.send("Connection Failed")
     }
 });
+const limiter = rateLimit({
+    max: parseInt(process.env.PULL_RATE),
+    windowMs: 60 * 60 * 1000,
+    message: 'Too many requests. Try again after an hour'
+  })
+
 app.use(express.json());
-app.use('/api', routes)
+app.use('/api', limiter, routes)
 
 app.listen(port,()=>{
     console.log(`we are at port ${port}`)

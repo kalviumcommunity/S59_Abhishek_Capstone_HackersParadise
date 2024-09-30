@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const Joi = require('joi');
-const { connectDB } = require('./db.js');
-const User = require('./Schemas/userSchema.js');
-const bounty = require('./Schemas/BountySchema.js');
-const Comment = require('./Schemas/CommentSchema.js');
-const Hactivity = require('./Schemas/HactivitySchema.js');
-const units = require('./Schemas/UnitsSchema.js')
+const jwt = require('jsonwebtoken')
+const { connectDB } = require('../config/db.js');
+const User = require('../Schemas/userSchema.js');
+const bounty = require('../Schemas/BountySchema.js');
+const Comment = require('../Schemas/CommentSchema.js');
+const Hactivity = require('../Schemas/HactivitySchema.js');
+const units = require('../Schemas/UnitsSchema.js')
+const SECRET = process.env.SECRET
 
 const validateLogin = Joi.object({
     fname: Joi.string().required(),
@@ -80,14 +82,22 @@ router.put('/update-user', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-    const findUser = await User.findOne({ password: req.body.password })
-    if (findUser) {
-        return res.json({ Message: "Login Successful!", name: findUser.fname})
+    try {
+        const findUser = await User.findOne({ mail: req.body.mail });
+        if (findUser) {
+            const token = jwt.sign({ userId: findUser._id }, SECRET, { expiresIn: '6h' });
+            return res.json({
+                Message: "Login Successful!",
+                name: findUser.fname,
+                accessToken: token
+            });
+        } else {
+            return res.status(401).json({ message: "Invalid email or password" });
+        }
+    } catch (error) {
+        return res.status(500).json({ message: "Server error", error });
     }
-    else {
-        return res.status(401).json({ err })
-    }
-})
+});
 
 router.post('/logout', async (req, res) => {
     return res.json({ Message: "Logout successfull!" })
@@ -112,6 +122,17 @@ router.get('/units', async (req, res) => {
         res.status(500).json(err)
     }
 })
+
+router.get('/hactivity', async (req, res) => {
+    try {
+      const hactivities = await Hactivity.find();
+      res.json(hactivities);
+    } catch (error) {
+      console.error("Error fetching hactivities:", error);
+      res.status(500).json({ error: "Failed to fetch hactivities." });
+    }
+  });
+
 router.post('/hactivity', async (req, res) => {
     try {
         const newHactivity = new Hactivity(req.body);
@@ -125,20 +146,21 @@ router.post('/hactivity', async (req, res) => {
 
 
 router.post('/hacktivity/comment', async (req, res) => {
-    const { comment } = req.body;
-
-    if (!comment) {
-        return res.status(400).send('Comment is required');
+    if (error) {
+        return res.status(400).send('Invalid data');
     }
 
     try {
-        const newComment = new Comment({ comment });
+        const { comment, date } = req.body;
+        const newComment = new Comment({ comment, date });
         await newComment.save();
         res.status(201).send(newComment);
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error'); 
+    }  res.status(500).send(error.message);
 });
+
 connectDB();
 
 module.exports = router;

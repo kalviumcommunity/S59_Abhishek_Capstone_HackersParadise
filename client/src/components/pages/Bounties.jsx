@@ -3,8 +3,10 @@ import search from '/search.svg';
 
 export default function Bounties() {
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [editBounty, setEditBounty] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const fetchData = async () => {
     try {
@@ -13,19 +15,33 @@ export default function Bounties() {
        
       console.log("Fetched data:", result);
       setData(result);
+      setFilteredData(result);
     } catch (err) {
-      console.log(import.meta.env.BOUNTY_API)
+      console.log(import.meta.env.BOUNTY_API);
       console.log("Error fetching data:", err);
     }
   };
 
+  const handleSearch = (event) => {
+    const query = event.target.value.toLowerCase();
+    setSearchQuery(query);
+    
+    const filtered = data.filter((bounty) => 
+      bounty.company.toLowerCase().includes(query) || 
+      bounty.reward.toString().includes(query)
+    );
+    
+    setFilteredData(filtered);
+  };
+
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`https://s59-abhishek-capstone-hackersparadise.onrender.com/api/bounties-delete/${id}`, {
+      const response = await fetch(`https://s59-abhishek-capstone-hackersparadise.onrender.com/api/bounties-delete/${bounty._id}`, {
         method: 'DELETE',
       });
       if (response.status === 204) {
         setData(data.filter((bounty) => bounty._id !== id));
+        setFilteredData(filteredData.filter((bounty) => bounty._id !== id));
       } else {
         console.log(`Error deleting data: Received status ${response.status}`);
       }
@@ -53,6 +69,15 @@ export default function Bounties() {
         }
         return prevData;
       });
+      setFilteredData((prevData) => {
+        const index = prevData.findIndex((b) => b.id === updatedBounty.id);
+        if (index !== -1) {
+          const newData = [...prevData];
+          newData[index] = updatedBounty;
+          return newData;
+        }
+        return prevData;
+      });
       setEditMode(false);
       setEditBounty(null);
     } catch (err) {
@@ -70,13 +95,18 @@ export default function Bounties() {
         <div className='pt-[4vh] pb-[4vh]'>
           <div className='m-auto p-[0.2rem] bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] to-[#6300ff] rounded-[0.9rem] w-[40vw]'>
             <div className='flex justify-between bg-[#000746] p-[0.2rem] pr-[1rem] pl-[1rem] rounded-xl'>
-              <input placeholder="Search Modules here..." className='text-[#d48ff9] placeholder-[#d48ff9] bg-[#000746] text-[1vw] w-full  focus:outline-none focus:ring-0 font-semibold'></input> 
+              <input
+                placeholder="Search Bounties here..."
+                className='text-[#d48ff9] placeholder-[#d48ff9] bg-[#000746] text-[1vw] w-full focus:outline-none focus:ring-0 font-semibold'
+                value={searchQuery}
+                onChange={handleSearch}
+              />
               <img src={search} alt="search" className='cursor-pointer w-[2vw]'></img> 
             </div>
           </div>
         </div>
         <div className='flex flex-wrap w-full justify-center'>
-        {data.map((bounty) => (
+        {filteredData.map((bounty) => (
           <div key={bounty.id} className="h-full w-[20vw] bg-[#b25ffb] m-[2vw] rounded">
             <div className="flex place-items-center justify-between place-h-[10vh] w-full shadow-2xl p-4 font-bold">
               <div className="flex place-items-center">
