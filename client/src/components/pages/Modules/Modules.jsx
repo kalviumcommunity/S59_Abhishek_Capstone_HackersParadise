@@ -1,29 +1,44 @@
 import React from "react";
 import search from "/search.svg";
 import module from "/module.png";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Modules() {
-  // const [data, setData] = useState([]);
-  // const fetchData = () => {
-  //   fetch("http://localhost:8080/api/modules")
-  //     .then((response) => response.json())
-  //     .then((result) => {
-  //       console.log("Fetched data:", result);
-  //       setData(result);
-  //     })
-  //     .catch((err) => {
-  //       console.error("Error fetching data:", err);
-  //     });
-  // };
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  const navigate = useNavigate();
+  const userId = '66f536da9431adb5f7a802ce';
+  navigate("/profile", { state: { userId } });
+  const addToWishlist = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/user/wishlist/${userId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          wishlist: [{ name: "NETWORKING" }]
+        }),
+      });
+  
+      const result = await response.json();
+      if (response.ok) {
+        console.log("Wishlist updated successfully:", result);
+        alert("Module added to your wishlist!");
+
+      } else {
+        console.error("Failed to update wishlist:", result);
+        alert("Module is already in wishlist.");
+      }
+    } catch (error) {
+      console.error("Error while adding to wishlist:", error);
+      alert("Error occurred while adding to wishlist.");
+    }
+  };
+  
 
   return (
     <>
       <div className="bg-[#000746] h-full">
-        <div className="pt-[4vh] pb-[4vh] ">
+        <div className="pt-[4vh] pb-[4vh]">
           <div className="m-auto p-[0.2rem] bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] to-[#6300ff] rounded-[0.9rem] w-[40vw]">
             <div className="flex justify-between bg-[#000746] p-[0.2rem] pr-[1rem] pl-[1rem] rounded-xl">
               <input
@@ -46,15 +61,15 @@ export default function Modules() {
           <div className="text-white p-4">
             <ol className="list-inside list-decimal text-[4vw]">
               <li>
-                <span class="font-bold">NETWORKING</span>
-                <div class="text-[1vw] ml-[3vw] p-4">
+                <span className="font-bold">NETWORKING</span>
+                <div className="text-[1vw] ml-[3vw] p-4">
                   <p className="w-[80%]">
                     Networking is the process of making connections and building
                     relationships. These connections can provide you with advice
                     and contacts, which can help you make informed career
                     decisions.
                   </p>
-                  <ol type="i" class="list-inside list-decimal mt-2">
+                  <ol type="i" className="list-inside list-decimal mt-2">
                     <li>Router</li>
                     <li>MAC Address</li>
                     <li>IP Address</li>
@@ -64,13 +79,21 @@ export default function Modules() {
             </ol>
           </div>
         </div>
-        <div className="flex ml-[90vw] w-[7vw] pb-[22vh]">
+
+        <div className="flex justify-between ml-[60vw] w-[25vw] h-[5vh] mb-[21vh]">
+          <button
+            onClick={addToWishlist}
+            className="h-full flex p-4 place-items-center rounded font-bold bg-gradient-to-r from-[#b25ffb] via-[#b25ffb] to-[#6300ff] text-white"
+          >
+            Add to Wishlist
+          </button>
           <Link to="/ModUnits">
-        <button className="w-full flex justify-center place-items-center rounded font-bold bg-gradient-to-r from-[#b25ffb] via-[#b25ffb] to-[#6300ff] text-white">
-          Start the Course
-        </button>
-        </Link>
+            <button className="h-full flex p-4 place-items-center rounded font-bold bg-gradient-to-r from-[#b25ffb] via-[#b25ffb] to-[#6300ff] text-white">
+              Start the Course
+            </button>
+          </Link>
         </div>
+
         <hr className="bg-[#5711af] w-full h-[1vh]" />
       </div>
     </>
