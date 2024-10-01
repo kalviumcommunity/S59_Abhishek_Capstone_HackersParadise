@@ -11,7 +11,6 @@ const HactivitySchema = new mongoose.Schema({
     },
     level : {
         type: String,
-        required : true
     },
     info : {
         type : String,
