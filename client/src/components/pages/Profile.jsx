@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Activity, Book, Award, Users, ShoppingCart, Upload } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Activity, Book, Award, Users, Upload } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 import { 
   Button, 
   TextField, 
@@ -14,7 +15,12 @@ import { motion } from 'framer-motion';
 const DashboardLayout = () => {
   const [profilePic, setProfilePic] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [wishlist, setWishlist] = useState([]);
   const [snackbar, setSnackbar] = useState({ open: false, message: '' });
+
+  const location = useLocation();
+  const userId = location.state?.userId;
+  console.log(userId);
 
   const dummyData = {
     username: 'abhi0052',
@@ -27,12 +33,23 @@ const DashboardLayout = () => {
       { name: 'Defensive', value: '0.00%', color: 'text-[#b25ffb]' },
       { name: 'General', value: '0.00%', color: 'text-[#6300ff]' },
     ],
-    favoriteModules: [
-      { name: 'Intro to Academy', progress: '', difficulty: 'Fundamental' },
-      { name: 'Advanced Techniques', progress: '50%', difficulty: 'Intermediate' },
-      { name: 'Expert Challenges', progress: '25%', difficulty: 'Advanced' },
-    ],
   };
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/api/user/${userId}`);
+        if (response.ok) {
+          const data = await response.json();
+          setWishlist(data.wishlist);
+        } else {
+          console.error("Failed to fetch wishlist:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching wishlist:", error);
+      }
+    };
+    fetchWishlist();
+  }, [userId]);
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -82,17 +99,10 @@ const DashboardLayout = () => {
           </div>
           <h2 className="mt-4 text-xl font-semibold">{dummyData.username}</h2>
           <p className="text-gray-400">{dummyData.plan}</p>
-          <div className="mt-2 flex items-center justify-center">
-          </div>
         </div>
         <nav>
           <ul className="space-y-2">
-            {[
-              { icon: Activity, label: 'Dashboard' },
-              { icon: Book, label: 'Exams' },
-              { icon: Award, label: 'Modules' },
-              { icon: Users, label: 'Paths' },
-            ].map((item, index) => (
+            {[{ icon: Activity, label: 'Dashboard' }, { icon: Book, label: 'Exams' }, { icon: Award, label: 'Modules' }, { icon: Users, label: 'Paths' }].map((item, index) => (
               <motion.li 
                 key={index}
                 whileHover={{ scale: 1.05 }}
@@ -106,6 +116,7 @@ const DashboardLayout = () => {
           </ul>
         </nav>
       </motion.div>
+
       <div className="flex-1 p-10 overflow-y-auto">
         <header className="flex justify-between items-center mb-8">
           <motion.h1 
@@ -162,41 +173,50 @@ const DashboardLayout = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {dummyData.favoriteModules.map((module, index) => (
-                        <tr key={index} className="border-t border-gray-700">
-                          <td className="py-3">{module.name}</td>
-                          <td className="py-3">
-                            {module.progress && (
-                              <div className="w-full bg-gray-700 rounded-full h-2.5">
-                                <div 
-                                  className="bg-[#6300ff] h-2.5 rounded-full" 
-                                  style={{ width: module.progress }}
-                                ></div>
-                              </div>
-                            )}
-                          </td>
-                          <td className="py-3">
-                            <span className={`px-2 py-1 rounded text-xs ${
-                              module.difficulty === 'Fundamental' ? 'bg-green-500 text-black' :
-                              module.difficulty === 'Intermediate' ? 'bg-yellow-500 text-black' :
-                              'bg-red-500 text-white'
-                            }`}>
-                              {module.difficulty}
-                            </span>
-                          </td>
-                          <td className="py-3">
-                            <Button variant="contained" className="bg-[#6300ff] hover:bg-[#6300ff]">
-                              Start
-                            </Button>
+                      {wishlist.length > 0 ? (
+                        wishlist.map((module, index) => (
+                          <tr key={index} className="border-t border-gray-700">
+                            <td className="py-3">{module.name}</td>
+                            <td className="py-3">
+                              {module.progress && (
+                                <div className="w-full bg-gray-700 rounded-full h-2.5">
+                                  <div 
+                                    className="bg-[#6300ff] h-2.5 rounded-full" 
+                                    style={{ width: module.progress }}
+                                  ></div>
+                                </div>
+                              )}
+                            </td>
+                            <td className="py-3">
+                              <span className={`px-2 py-1 rounded text-xs ${
+                                module.difficulty === 'Fundamental' ? 'bg-green-500 text-black' :
+                                module.difficulty === 'Intermediate' ? 'bg-yellow-500 text-black' :
+                                'bg-red-500 text-white'
+                              }`}>
+                                {module.difficulty}
+                              </span>
+                            </td>
+                            <td className="py-3">
+                              <Button variant="contained" className="bg-[#6300ff] hover:bg-[#6300ff]">
+                                Start
+                              </Button>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td className="py-3 text-center" colSpan="4">
+                            No favorite modules found.
                           </td>
                         </tr>
-                      ))}
+                      )}
                     </tbody>
                   </table>
                 </div>
               </CardContent>
             </Card>
           </motion.div>
+
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}

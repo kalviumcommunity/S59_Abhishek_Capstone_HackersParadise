@@ -4,17 +4,17 @@ require('dotenv').config();
 const transporter = nodemailer.createTransport({
   service: 'gmail', 
   auth: {
-    user: process.env.EMAIL_USER, // Your email
-    pass: process.env.EMAIL_PASS, // Your email password or app-specific password
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
 });
 
 const sendEmail = () => {
   const mailOptions = {
-    from: process.env.EMAIL_USER,  // Sender email
-    to: 'abhishek.kaundal0052@gmail.com', // Receiver email
-    subject: 'Successful Registration',   // Email subject
-    text: 'Congratulations! Your registration was successful.', // Email body
+    from: process.env.EMAIL_USER,
+    to: 'abhishek.kaundal0052@gmail.com',
+    subject: 'Start Learning Now!!', 
+    text: 'Hey Ethical hacker, start your journey by exploring our modules and practice your skills through bug bounties.',
   };
   
   transporter.sendMail(mailOptions, (error, info) => {

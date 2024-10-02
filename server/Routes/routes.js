@@ -103,6 +103,45 @@ router.post('/logout', async (req, res) => {
     return res.json({ Message: "Logout successfull!" })
 })
 
+router.get('/user/:id', async (req, res) => {
+    const { id } = req.params;
+  
+    const user = await User.findById(id);
+  
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  });
+
+  router.post('/user/wishlist/:id', async (req, res) => {
+    const { id } = req.params;
+    const { wishlist } = req.body;
+    try {
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        const moduleExists = user.wishlist.some(
+            (module) => module.name === wishlist[0].name
+        );
+        if (!moduleExists) {
+            user.wishlist.push({
+                name: wishlist[0].name,
+                progress: "0%",
+                difficulty: "Fundamental"
+            });
+            await user.save();
+            res.status(200).json({ message: 'Wishlist updated successfully', user });
+        } else {
+            res.status(400).json({ message: 'Module already in wishlist' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating wishlist', error });
+    }
+});
+
 router.get('/bounties', async (req, res) => {
     try {
         const bounties = await bounty.find()
