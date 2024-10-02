@@ -11,10 +11,19 @@ export default function SignUp() {
     formState: { errors },
   } = useForm();
   const [respText, setResp] = useState(null);
+  const [isVerified, setIsVerified] = useState(false); 
+  const [otpModal, setOtpModal] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [email, setEmail] = useState(""); 
 
   const onSubmit = (data) => {
-    console.log(data);
-    registerUser(data);
+    if (isVerified) {
+      console.log(data);
+      registerUser(data);
+    } else {
+      alert("Please verify your email before submitting.");
+    }
   };
 
   useEffect(() => {
@@ -23,23 +32,55 @@ export default function SignUp() {
 
   const registerUser = async (data) => {
     try {
-      const response = await fetch(
-        import.meta.env.VITE_SIGNUP_API,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            fname: data.fname,
-            lname: data.lname,
-            mail: data.mail,
-            password: data.password,
-          }),
-        }
-      );
+      const response = await fetch(import.meta.env.VITE_SIGNUP_API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fname: data.fname,
+          lname: data.lname,
+          mail: data.mail,
+          password: data.password,
+        }),
+      });
       const responseText = await response.json();
       setResp(responseText);
     } catch (err) {
       console.log(err);
+    }
+  };
+  const sendOtp = async (email) => {
+    try {
+      const response = await fetch(import.meta.env.VITE_SEND_OTP_API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (response.ok) {
+        setEmailSent(true);
+        setOtpModal(true);
+      }
+    } catch (err) {
+      console.log("Error sending OTP:", err);
+    }
+  };
+
+  const verifyOtp = async () => {
+    try {
+      const response = await fetch(import.meta.env.VITE_VERIFY_OTP_API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, otp }),
+      });
+      const responseText = await response.json();
+      if (response.ok) {
+        setIsVerified(true);
+        alert("OTP verified successfully!");
+        setOtpModal(false); 
+      } else {
+        alert("Invalid OTP or OTP expired");
+      }
+    } catch (err) {
+      console.log("Error verifying OTP:", err);
     }
   };
 
@@ -99,7 +140,23 @@ export default function SignUp() {
                 required: "Please enter the mail",
                 pattern: { value: /^\S+@\S+$/i, message: "Invalid email" },
               })}
+              onChange={(e) => setEmail(e.target.value)} 
             />
+
+            {emailSent && (
+              <div className="text-green-500">
+                OTP sent to your email. Please verify.
+              </div>
+            )}
+
+            <button
+              type="button"
+              className="h-[4vh] w-[20vw] rounded-[0.6rem] m-4 bg-gradient-to-b from-[#d48ff9] via-[#b25ffb] to-[#6300ff]"
+              onClick={() => sendOtp(email)}
+              disabled={emailSent}
+            >
+              Verify Email
+            </button>
 
             <input
               type="password"
@@ -133,6 +190,7 @@ export default function SignUp() {
             </button>
           </div>
         </form>
+
         <p className="text-center text-white">OR</p>
         <Link to="/Login">
           <div className="flex justify-center py-[5vh]">
@@ -147,6 +205,26 @@ export default function SignUp() {
           </div>
         </Link>
       </div>
+      {otpModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-5 rounded shadow-lg">
+            <h2 className="text-center text-xl mb-4">Enter OTP</h2>
+            <input
+              type="text"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              className="w-full border border-gray-300 p-2 mb-4"
+              placeholder="Enter OTP"
+            />
+            <button
+              onClick={verifyOtp}
+              className="w-full bg-blue-500 text-white py-2 rounded"
+            >
+              Verify OTP
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }
