@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import search from "/search.svg";
 import module from "/module.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 export default function Modules() {
   const navigate = useNavigate();
   const userId = '66f536da9431adb5f7a802ce';
-  navigate("/profile", { state: { userId } });
+  
   const addToWishlist = async () => {
     try {
       const response = await fetch(`http://localhost:8080/api/user/wishlist/${userId}`, {
@@ -21,10 +21,12 @@ export default function Modules() {
   
       const result = await response.json();
       if (response.ok) {
+        navigate(`/profile/${userId}`);
         console.log("Wishlist updated successfully:", result);
         alert("Module added to your wishlist!");
 
       } else {
+        navigate(`/profile/${userId}`);
         console.error("Failed to update wishlist:", result);
         alert("Module is already in wishlist.");
       }
@@ -32,8 +34,7 @@ export default function Modules() {
       console.error("Error while adding to wishlist:", error);
       alert("Error occurred while adding to wishlist.");
     }
-  };
-  
+  };  
 
   return (
     <>
@@ -82,7 +83,7 @@ export default function Modules() {
 
         <div className="flex justify-between ml-[60vw] w-[25vw] h-[5vh] mb-[21vh]">
           <button
-            onClick={addToWishlist}
+            onClick={addToWishlist} 
             className="h-full flex p-4 place-items-center rounded font-bold bg-gradient-to-r from-[#b25ffb] via-[#b25ffb] to-[#6300ff] text-white"
           >
             Add to Wishlist

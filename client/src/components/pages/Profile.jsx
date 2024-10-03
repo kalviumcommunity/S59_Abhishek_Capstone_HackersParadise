@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Activity, Book, Award, Users, Upload } from 'lucide-react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { 
   Button, 
   TextField, 
@@ -19,9 +19,7 @@ const DashboardLayout = () => {
   const [uploading, setUploading] = useState(false);
   const [wishlist, setWishlist] = useState([]);
   const [snackbar, setSnackbar] = useState({ open: false, message: '' });
-
-  const location = useLocation();
-  const userId = location.state?.userId;
+  const { userId } = useParams();
   console.log(userId);
 
   const dummyData = {
