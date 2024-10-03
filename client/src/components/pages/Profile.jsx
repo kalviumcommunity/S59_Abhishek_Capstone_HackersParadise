@@ -11,6 +11,8 @@ import {
   Typography 
 } from '@mui/material';
 import { motion } from 'framer-motion';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../../Firebase';
 
 const DashboardLayout = () => {
   const [profilePic, setProfilePic] = useState(null);
@@ -34,6 +36,7 @@ const DashboardLayout = () => {
       { name: 'General', value: '0.00%', color: 'text-[#6300ff]' },
     ],
   };
+
   useEffect(() => {
     const fetchWishlist = async () => {
       try {
@@ -55,11 +58,20 @@ const DashboardLayout = () => {
     const file = event.target.files[0];
     if (file) {
       setUploading(true);
-      setTimeout(() => {
-        setProfilePic(URL.createObjectURL(file));
+      const storageRef = getStorage();
+      const fileRef = ref(storageRef, `profilePictures/${file.name}`);
+      fileRef.put(file).then((snapshot) => {
+        return snapshot.ref.getDownloadURL();
+      }).then((downloadURL) => {
+        console.log(downloadURL);
+        setProfilePic(downloadURL);
+        setSnackbar({ open: true, message: 'Profile picture updated successfully!' }); 
+      }).catch((error) => {
+        console.error('Error uploading file:', error);
+        setSnackbar({ open: true, message: 'Error uploading file. Please try again.' });
+      }).finally(() => {
         setUploading(false);
-        setSnackbar({ open: true, message: 'Profile picture updated successfully!' });
-      }, 2000);
+      });
     }
   };
 
