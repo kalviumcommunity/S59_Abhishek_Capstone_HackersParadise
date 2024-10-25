@@ -11,17 +11,17 @@ import {
   Typography 
 } from '@mui/material';
 import { motion } from 'framer-motion';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '../../Firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../../firebase';
 
 const DashboardLayout = () => {
   const [profilePic, setProfilePic] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [wishlist, setWishlist] = useState([]);
   const [snackbar, setSnackbar] = useState({ open: false, message: '' });
+  const [loading, setLoading] = useState(true);
+  const [userNotFound, setUserNotFound] = useState(false);
   const { userId } = useParams();
-  console.log(userId);
-
   const dummyData = {
     username: 'abhi0052',
     plan: 'Free',
@@ -42,40 +42,83 @@ const DashboardLayout = () => {
         if (response.ok) {
           const data = await response.json();
           setWishlist(data.wishlist);
+        } else if (response.status === 404) {
+          setUserNotFound(true);
         } else {
           console.error("Failed to fetch wishlist:", response.statusText);
         }
       } catch (error) {
         console.error("Error fetching wishlist:", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchWishlist();
   }, [userId]);
 
-  const handleFileUpload = (event) => {
+  const handleFileUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {
       setUploading(true);
-      const storageRef = getStorage();
-      const fileRef = ref(storageRef, `profilePictures/${file.name}`);
-      fileRef.put(file).then((snapshot) => {
-        return snapshot.ref.getDownloadURL();
-      }).then((downloadURL) => {
-        console.log(downloadURL);
+      try {
+        const fileRef = ref(storage, `profilePictures/${file.name}`);
+        await uploadBytes(fileRef, file);
+        const downloadURL = await getDownloadURL(fileRef);
+        
         setProfilePic(downloadURL);
-        setSnackbar({ open: true, message: 'Profile picture updated successfully!' }); 
-      }).catch((error) => {
+        setSnackbar({ open: true, message: 'Profile picture updated successfully!' });
+        await fetch(`http://localhost:8080/api/user/${userId}/profile-pic`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ profilePic: downloadURL }),
+        });
+        
+      } catch (error) {
         console.error('Error uploading file:', error);
         setSnackbar({ open: true, message: 'Error uploading file. Please try again.' });
-      }).finally(() => {
+      } finally {
         setUploading(false);
-      });
+      }
     }
   };
 
   const handleCloseSnackbar = () => {
     setSnackbar({ ...snackbar, open: false });
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-[#000746] text-white">
+        <CircularProgress className="text-[#6300ff]" />
+      </div>
+    );
+  }
+
+  if (userNotFound) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-[#000746] text-white text-center">
+        <div>
+          <Typography variant="h5" className="mb-4">
+            User not found. Please sign up or sign in to view your profile.
+          </Typography>
+          <Button 
+            variant="contained" 
+            className="bg-[#6300ff] hover:bg-[#6300ff] text-black" 
+          >
+            Sign Up
+          </Button>
+          <Button 
+            variant="contained" 
+            className="bg-[#b25ffb] hover:bg-[#b25ffb] text-black ml-2" 
+          >
+            Sign In
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen bg-[#000746] text-white overflow-hidden">
@@ -108,7 +151,6 @@ const DashboardLayout = () => {
             />
           </div>
           <h2 className="mt-4 text-xl font-semibold">{dummyData.username}</h2>
-          <p className="text-gray-400">{dummyData.plan}</p>
         </div>
         <nav>
           <ul className="space-y-2">
@@ -171,115 +213,32 @@ const DashboardLayout = () => {
           >
             <Card className="bg-[#0a0d36] text-white">
               <CardContent className='bg-[#1a1f6d]'>
-                <Typography variant="h6" className="mb-4 text-white">Favorite Modules List</Typography>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-white">
-                    <thead>
-                      <tr className="text-left text-white text-gray-400">
-                        <th className="pb-2">Name</th>
-                        <th className="pb-2">Progress</th>
-                        <th className="pb-2">Difficulty</th>
-                        <th className="pb-2"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {wishlist.length > 0 ? (
-                        wishlist.map((module, index) => (
-                          <tr key={index} className="border-t border-gray-700">
-                            <td className="py-3">{module.name}</td>
-                            <td className="py-3">
-                              {module.progress && (
-                                <div className="w-full bg-gray-700 rounded-full h-2.5">
-                                  <div 
-                                    className="bg-[#6300ff] h-2.5 rounded-full" 
-                                    style={{ width: module.progress }}
-                                  ></div>
-                                </div>
-                              )}
-                            </td>
-                            <td className="py-3">
-                              <span className={`px-2 py-1 rounded text-xs ${
-                                module.difficulty === 'Fundamental' ? 'bg-green-500 text-black' :
-                                module.difficulty === 'Intermediate' ? 'bg-yellow-500 text-black' :
-                                'bg-red-500 text-white'
-                              }`}>
-                                {module.difficulty}
-                              </span>
-                            </td>
-                            <td className="py-3">
-                              <Button variant="contained" className="bg-[#6300ff] hover:bg-[#6300ff]">
-                                Start
-                              </Button>
-                            </td>
-                          </tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td className="py-3 text-center" colSpan="4">
-                            No favorite modules found.
-                          </td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Card className="bg-[#0a0d36] text-white">
-              <CardContent className='bg-[#6300ff]'>
-                <Typography variant="h6" className="mb-4">
-                  Weekly Streak <span className="bg-yellow-500 text-black px-2 py-1 rounded text-xs ml-2">BETA</span>
+                <Typography variant="h6" className="font-semibold">
+                  Your Wishlist
                 </Typography>
-                <Typography variant="subtitle2" className="text-gray-400 mb-2">This Week</Typography>
-                <Typography variant="h4" className="mb-2">
-                  {dummyData.weeklyStreak} <span className="text-gray-400 text-lg">/ {dummyData.maxStreak} Streak pts</span>
-                </Typography>
-                <div className="mt-8">
-                  <Typography variant="subtitle1" className="font-semibold mb-2">Refer a friend</Typography>
-                  <Typography variant="body2" className="text-gray-400 mb-4">
-                    Refer a Friend, Earn Cubes, Unlock Academy Modules!
-                  </Typography>
-                  <Button 
-                    variant="contained" 
-                    fullWidth 
-                    className="bg-[#d48ff9] hover:bg-[#b25ffb] text-black"
-                  >
-                    Start Referring
-                  </Button>
-                </div>
+                <ul className="mt-4">
+                  {wishlist.length > 0 ? (
+                    wishlist.map((item, index) => (
+                      <li key={index} className="border-b border-gray-600 py-2">
+                        {item.name} - {item.price} INR
+                      </li>
+                    ))
+                  ) : (
+                    <li className="text-gray-400">No items in wishlist.</li>
+                  )}
+                </ul>
               </CardContent>
             </Card>
           </motion.div>
         </div>
-
-        <motion.div 
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mt-8"
-        >
-        </motion.div>
       </div>
 
       <Snackbar
         open={snackbar.open}
-        autoHideDuration={6000}
+        autoHideDuration={3000}
         onClose={handleCloseSnackbar}
         message={snackbar.message}
       />
-
-      {uploading && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <CircularProgress className="text-[#6300ff]" />
-        </div>
-      )}
     </div>
   );
 };
