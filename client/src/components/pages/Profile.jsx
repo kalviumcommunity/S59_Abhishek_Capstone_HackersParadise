@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { motion } from 'framer-motion';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '../../firebase';
+import { storage } from '../../Firebase';
 
 const DashboardLayout = () => {
   const [profilePic, setProfilePic] = useState(null);
