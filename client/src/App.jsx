@@ -25,7 +25,7 @@ function App() {
         <Route path="/AddHactivity" element={<AddHactivity />} />
         <Route path="/Unit" element={<Unit />} />
         <Route path="/SignUp" element={<SignUp />} />
-        <Route path='/Profile' element={<Profile />} />
+        <Route path='/Profile/:userId' element={<Profile />} />
       </Routes>
     </>
   );
