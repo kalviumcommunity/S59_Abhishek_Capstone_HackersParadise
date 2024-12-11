@@ -73,8 +73,9 @@ export default function Hactivity() {
             <div className="m-auto p-[0.2rem] bg-gradient-to-r from-[#d48ff9] via-[#b25ffb] to-[#6300ff] rounded-[0.9rem] w-[40vw]">
               <div className="flex justify-between bg-[#000746] p-[0.2rem] pr-[1rem] pl-[1rem] rounded-xl">
                 <input
-                  placeholder="Search Modules here..."
+                  placeholder="Search Hactivities here..."
                   className="text-[#d48ff9] placeholder-[#d48ff9] bg-[#000746] text-[1vw] w-full focus:outline-none focus:ring-0 font-semibold"
+                  onchange={handleSearch}
                 ></input>
                 <img
                   src={search}
@@ -162,8 +163,10 @@ export default function Hactivity() {
             </div>
           ))
         ) : (
+          <div className="">
           <div className="flex justify-center my-10">
             <HashLoader color="#b25ffb" size={80} />
+          </div>
           </div>
         )}
       </div>
