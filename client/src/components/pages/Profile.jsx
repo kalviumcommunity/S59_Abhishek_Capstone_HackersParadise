@@ -220,7 +220,7 @@ const DashboardLayout = () => {
                   {wishlist.length > 0 ? (
                     wishlist.map((item, index) => (
                       <li key={index} className="border-b border-gray-600 py-2">
-                        {item.name} - {item.price} INR
+                        {item.name} 
                       </li>
                     ))
                   ) : (
