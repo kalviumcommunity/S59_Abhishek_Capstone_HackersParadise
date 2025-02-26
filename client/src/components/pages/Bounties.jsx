@@ -32,7 +32,7 @@ export default function Bounties() {
         bounty.company.toLowerCase().includes(query) ||
         bounty.reward.toString().includes(query)
     );
-
+  
     setFilteredData(filtered);
   };
 
